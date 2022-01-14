@@ -1,8 +1,5 @@
-#include <Arduino.h>
 #include <WiFi.h>
-
 #include <WebServer.h>
-
 #include <Update.h>
 
 WebServer webServer(80);
@@ -62,7 +59,7 @@ const char* ota_page =
 
 
 
-void setup_webserver()
+void setup_web_server()
  {
   webServer.onNotFound([]() 
   {
@@ -100,39 +97,17 @@ void setup_webserver()
     }
   });
 
-
-
-
   webServer.begin();
 
 }
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-void loop_webserver() 
+void loop_web_server() 
 {
 
   webServer.handleClient();
+  
 }
 
 
