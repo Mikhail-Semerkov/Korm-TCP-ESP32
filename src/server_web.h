@@ -286,17 +286,18 @@ void saveConfiguration(const char *filename, const Config &config)
   }
   StaticJsonDocument<256> doc;
 
-  doc["ssid"] = config.SSID_CONFIG;
+  doc["ssid"] = "Padavan 2.4";
   doc["pass"] = config.PASS_CONFIG;
   doc["ssid_ap"] = config.SSID_AP_CONFIG;
   doc["pass_ap"] = config.PASS_AP_CONFIG;
-  doc["port_tcp"] = config.PORT_TCP;
+  doc["port_tcp"] = 4005;
 
   if (serializeJson(doc, file) == 0)
   {
     Serial.println(F("Failed to write to file"));
   }
   file.close();
+  Serial.println("Save Ok");
 }
 
 void printFile(const char *filename)
@@ -327,6 +328,15 @@ String ip2Str(IPAddress ip)
   return s;
 }
 
+void button_save_click()
+{
+  Serial.println(F("Saving configuration..."));
+  saveConfiguration(filename, config);
+  web_server.send(200, "text/html", ""); //посылка ответа сервера
+  Serial.println(F("Loading configuration..."));
+  loadConfiguration(filename, config);
+}
+
 void setup_server_web(void)
 {
   SPIFFS.begin();
@@ -343,9 +353,6 @@ void setup_server_web(void)
 
   Serial.println(F("Loading configuration..."));
   loadConfiguration(filename, config);
-
-  Serial.println(F("Saving configuration..."));
-  saveConfiguration(filename, config);
 
   Serial.println(F("Print config file..."));
   printFile(filename);
@@ -397,6 +404,8 @@ void setup_server_web(void)
                   web_server.send(200, "text/json", json);
                   json = String();
                 });
+
+  web_server.on("/save_config_set", button_save_click);
 
   web_server.begin();
   Serial.println("HTTP web_server started");

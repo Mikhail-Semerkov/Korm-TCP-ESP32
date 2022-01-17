@@ -1,3 +1,4 @@
+request = new XMLHttpRequest();
 
 var client_tcp, wifi_rssi, ip_addr, mask_addr, gataway_addr, free_ram, ssid, pass, ssid_ap, pass_ap, port_tcp;
 
@@ -43,4 +44,17 @@ function run() {
 
 function onBodyLoad() {
   run();
+}
+
+
+
+
+
+//Button сохранить
+function button_click_save() {
+
+  console.log("Save Config");
+  request.open('GET', '/save_config_set', true);
+  request.send();
+
 }
