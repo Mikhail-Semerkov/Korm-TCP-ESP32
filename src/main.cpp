@@ -1,22 +1,18 @@
-#include<Arduino.h>
+#include <Arduino.h>
 
-#include<tcp_server.h>
+#include <tcp_server.h>
+#include <server_web.h>
 
-#include<web_server.h>
-
-
-void setup() 
+void setup()
 {
-
   setup_tcp_server();
-  setup_web_server();
 
+  setup_server_web();
 }
 
-void loop() 
+void loop()
 {
-
   loop_tcp_server();
-  loop_web_server();
 
+  loop_server_web();
 }
