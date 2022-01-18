@@ -1,19 +1,8 @@
 #include <Arduino.h>
 
-
 #include <config_load.h>
 #include <tcp_server.h>
 #include <server_web.h>
-
-
-
-
-
-
-
-
-
-
 
 void setup()
 {

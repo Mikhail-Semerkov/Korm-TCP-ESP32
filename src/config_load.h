@@ -18,7 +18,7 @@ Config config;
 void loadConfiguration(const char *filename, Config &config)
 {
 
-Serial.println(F("Loading configuration..."));
+  Serial.println(F("Loading configuration..."));
 
   File file = SPIFFS.open(filename);
   StaticJsonDocument<512> doc;

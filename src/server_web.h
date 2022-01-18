@@ -10,7 +10,6 @@ const char *host = "esp32fs";
 
 File fsUploadFile;
 
-
 String formatBytes(size_t bytes)
 {
   if (bytes < 1024)
@@ -235,8 +234,6 @@ void listDir(fs::FS &fs, const char *dirname, uint8_t levels)
   }
 }
 
-
-
 String ip2Str(IPAddress ip)
 {
   String s = "";
@@ -256,14 +253,12 @@ void button_save_click()
   loadConfiguration(filename, config);
 }
 
-
 void button_reboot_click()
 {
   Serial.println(F("Rebooting ESP32..."));
   web_server.send(200, "text/html", ""); //посылка ответа сервера
   delay(3000);
   ESP.restart();
-
 }
 
 void setup_server_web(void)
@@ -279,9 +274,6 @@ void setup_server_web(void)
     Serial.println(F("Failed to initialize SD library"));
     delay(1000);
   }
-
-  
-  
 
   Serial.println(F("Print config file..."));
   printFile(filename);
@@ -319,20 +311,17 @@ void setup_server_web(void)
                   json += "\"client_tcp\":" + String("\"") + String(Client_Connected) + String("\", \n");
                   json += "\"wifi_rssi\":" + String("\"") + String(WiFi.RSSI()) + String("\", \n");
 
+                  if (String(config.MODE_WIFI) == "STA")
+                  {
+                    json += "\"ip_addr\":" + String("\"") + String(ip2Str(WiFi.localIP())) + String("\", \n");
+                    json += "\"mask_addr\":" + String("\"") + String(ip2Str(WiFi.subnetMask())) + String("\", \n");
+                  }
+                  if (String(config.MODE_WIFI) == "AP")
+                  {
+                    json += "\"ip_addr\":" + String("\"") + String(ip2Str(WiFi.softAPIP())) + String("\", \n");
+                    json += "\"mask_addr\":" + String("\"") + String(ip2Str(WiFi.softAPSubnetCIDR())) + String("\", \n");
+                  }
 
-if(String(config.MODE_WIFI) == "STA")
-{
-json += "\"ip_addr\":" + String("\"") + String(ip2Str(WiFi.localIP())) + String("\", \n");
-json += "\"mask_addr\":" + String("\"") + String(ip2Str(WiFi.subnetMask())) + String("\", \n");
-}
-if(String(config.MODE_WIFI) == "AP")
-{
-json += "\"ip_addr\":" + String("\"") + String(ip2Str(WiFi.softAPIP())) + String("\", \n");
-json += "\"mask_addr\":" + String("\"") + String(ip2Str(WiFi.softAPSubnetCIDR())) + String("\", \n");
-}
-                  
-
-                  
                   json += "\"gataway_addr\":" + String("\"") + String(ip2Str(WiFi.gatewayIP())) + String("\", \n");
                   json += "\"free_ram\":" + String("\"") + String(ESP.getFreeHeap()) + String("\", \n");
 
@@ -347,7 +336,6 @@ json += "\"mask_addr\":" + String("\"") + String(ip2Str(WiFi.softAPSubnetCIDR())
                   web_server.send(200, "text/json", json);
                   json = String();
                 });
-
 
   web_server.on("/reboot_esp_set", button_reboot_click);
   web_server.on("/save_config_set", button_save_click);
