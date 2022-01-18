@@ -3,75 +3,153 @@
 
 <head>
   <meta http-equiv="Content-type" content="text/html; charset=utf-8">
-  <title>ESP Monitor</title>
+  <title>Korm TCP Server</title>
   <script type="text/javascript" src="js/json_load.js"></script>
+  <link rel="stylesheet" href="css/style.css" />
 </head>
 
 
-<body onload="onBodyLoad()">
+<body class="backgraund" onload="onBodyLoad()">
 
-  <div>
-    <label id="CLIENT_TCP"></label>
+
+
+
+  <div class="container">
+
+
+
+
+
+    <h2 class="title">Korm TCP Server</h2>
+
+    <div class="settings"><span class="settings__title setting-title">Информация</span></div>
+    <div class="result_label">
+      <label class="text_setting" id="FREE_RAM">RAM</label>
+    </div>
+    
+    <div style="margin-bottom: 2%;"></div>
+    
+    <div class="result_label">
+      <label class="text_setting" id="WIFI_RSSI">RSSI</label>
+    </div>
+
+    <div class="result_label">
+      <label class="text_setting" id="MODE_WIFI_RESULT">MODE</label>
+    </div>
+
+
+    <div style="margin-bottom: 5%;"></div>
+
+
+
+    <div class="settings">
+
+
+
+      
+            
+
+            <div class="settings"><span class="settings__title setting-title">IP адрес</span></div>
+            <div class="result__viewbox" id="IP_ADDR_RESULT">192.168.1.1</div>
+
+
+            <div style="margin-bottom: 5%;"></div>
+
+
+            <button class="accordion">Network Settings</button>
+            <div class="panel">
+                <div class="settings"><span class="settings__title setting-title">Режим Wi-Fi</span></div>
+                <select class="select-css" id="select_time_antiotravlenie">
+                    <option value="WIFI_STA">WiFi mode STA</option>
+                    <option value="WIFI_AP">WiFi mode AP</option>
+                </select>
+            </div>
+
+            <button class="accordion">Serial Settings</button>
+            <div class="panel">
+                <div class="settings"><span class="settings__title setting-title">Data Size</span></div>
+                <select class="select-css" id="select_time_antiotravlenie">
+                    <option value="SERIAL_7E1">SERIAL_7E1</option>
+                    <option value="SERIAL_8E1">SERIAL_8E1</option>
+                </select>
+            </div>
+
+            <button class="accordion">Information</button>
+            <div class="panel">
+                <div class="settings"><span class="settings__title setting-title">Информация</span></div>
+
+
+                <div class="text_setting" id="network_settings">
+
+                  <div>
+                    <label id="SSID">SSID</label>
+                  </div>
+                
+                  <div>
+                    <label id="PASS">PASS</label>
+                  </div>
+      
+                  <div>
+                    <label id="IP_ADDR">IP_ADDR</label>
+                  </div>
+                  <div>
+                    <label id="MASK_ADDR">MASK_ADDR</label>
+                  </div>
+                  <div>
+                    <label id="GATAWAY_ADDR">GATAWAY_ADDR</label>
+                  </div>
+              
+                  <div>
+                    <label id="PORT_TCP">PORT_TCP</label>
+                  </div>
+                </div>
+              
+                <div class="text_setting" id="serial_settings">
+              
+    
+    
+                  <div>
+                    <label id="CLIENT_TCP">CLIENT_TCP</label>
+                  </div>
+                
+                  <div>
+                    <label id="WIFI_RSSI">WIFI_RSSI</label>
+                  </div>
+                
+
+                  <div>
+                    <label id="FREE_RAM">FREE_RAM</label>
+                  </div>
+                </div>
+
+
+            </div>
+
+            </div>
+          
+            
+
+
+
+              <a href="#" class="button_style" onclick="button_click_save()" id="button_save" >Сохранить</a>
+
+              <a href="#" class="button_style"  onclick="reboot_esp_click()" id="button_reboot">Перезагрузить</a>
+
+              <div style="margin-bottom: 10%;"></div>
+
+
+              <div class="title_podval">Korm TCP Server by M.Semerkov</div>
+            
+        
   </div>
-
-  <div>
-    <label id="WIFI_RSSI"></label>
-  </div>
-
-  <div>
-    <label id="IP_ADDR"></label>
-  </div>
-
-  <div>
-    <label id="MASK_ADDR"></label>
-  </div>
-
-  <div>
-    <label id="GATAWAY_ADDR"></label>
-  </div>
-
-
-  <div>
-    <label id="FREE_RAM"></label>
-  </div>
-
-  <div>
-    <label id="SSID"></label>
-  </div>
-
-  <div>
-    <label id="PASS"></label>
-  </div>
-
-  <div>
-    <label id="SSID_AP"></label>
-  </div>
-
-  <div>
-    <label id="PASS_AP"></label>
-  </div>
-
-  <div>
-    <label id="PORT_TCP"></label>
-  </div>
-
-  <div>
-    <select class="select_style">
-      <option value="0">SERIAL_7E1</option>
-      <option value="1">SERIAL_8E1</option>
-    </select>
-  </div>
-
-
-  <div>
-    <button>Перезагрузить</button>
-  </div>
-
-  <div>
-    <button onclick="button_click_save()" id="button_save">Сохранить</button>
-  </div>
-
 
 </body>
+
+
+
+
+<script type="text/javascript" src="js/accordion.js"></script>
+
+
 
 </html>

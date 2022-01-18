@@ -10,6 +10,7 @@ const char *host = "esp32fs";
 
 File fsUploadFile;
 
+
 String formatBytes(size_t bytes)
 {
   if (bytes < 1024)
@@ -234,89 +235,7 @@ void listDir(fs::FS &fs, const char *dirname, uint8_t levels)
   }
 }
 
-struct Config
-{
-  char SSID_CONFIG[64];
-  char PASS_CONFIG[64];
-  char SSID_AP_CONFIG[64];
-  char PASS_AP_CONFIG[64];
-  int PORT_TCP;
-};
 
-const char *filename = "/config.json";
-Config config;
-
-void loadConfiguration(const char *filename, Config &config)
-{
-  File file = SPIFFS.open(filename);
-  StaticJsonDocument<512> doc;
-  DeserializationError error = deserializeJson(doc, file);
-  if (error)
-    Serial.println(F("Failed to read file, using default configuration"));
-
-  strlcpy(config.SSID_CONFIG,
-          doc["ssid"] | "Padavan 2.4",
-          sizeof(config.SSID_CONFIG));
-
-  strlcpy(config.PASS_CONFIG,
-          doc["pass"] | "46684668",
-          sizeof(config.PASS_CONFIG));
-
-  strlcpy(config.SSID_AP_CONFIG,
-          doc["ssid_ap"] | "Korm TCP Server",
-          sizeof(config.SSID_AP_CONFIG));
-
-  strlcpy(config.PASS_AP_CONFIG,
-          doc["pass_ap"] | "12345678",
-          sizeof(config.PASS_CONFIG));
-
-  config.PORT_TCP = doc["port_tcp"] | 4001;
-
-  file.close();
-}
-
-void saveConfiguration(const char *filename, const Config &config)
-{
-  SPIFFS.remove(filename);
-  File file = SPIFFS.open(filename, FILE_WRITE);
-  if (!file)
-  {
-    Serial.println(F("Failed to create file"));
-    return;
-  }
-  StaticJsonDocument<256> doc;
-
-  doc["ssid"] = "Padavan 2.4";
-  doc["pass"] = config.PASS_CONFIG;
-  doc["ssid_ap"] = config.SSID_AP_CONFIG;
-  doc["pass_ap"] = config.PASS_AP_CONFIG;
-  doc["port_tcp"] = 4005;
-
-  if (serializeJson(doc, file) == 0)
-  {
-    Serial.println(F("Failed to write to file"));
-  }
-  file.close();
-  Serial.println("Save Ok");
-}
-
-void printFile(const char *filename)
-{
-
-  File file = SPIFFS.open(filename);
-  if (!file)
-  {
-    Serial.println(F("Failed to read file"));
-    return;
-  }
-
-  while (file.available())
-  {
-    Serial.print((char)file.read());
-  }
-  Serial.println();
-  file.close();
-}
 
 String ip2Str(IPAddress ip)
 {
@@ -337,6 +256,16 @@ void button_save_click()
   loadConfiguration(filename, config);
 }
 
+
+void button_reboot_click()
+{
+  Serial.println(F("Rebooting ESP32..."));
+  web_server.send(200, "text/html", ""); //посылка ответа сервера
+  delay(3000);
+  ESP.restart();
+
+}
+
 void setup_server_web(void)
 {
   SPIFFS.begin();
@@ -351,8 +280,8 @@ void setup_server_web(void)
     delay(1000);
   }
 
-  Serial.println(F("Loading configuration..."));
-  loadConfiguration(filename, config);
+  
+  
 
   Serial.println(F("Print config file..."));
   printFile(filename);
@@ -386,10 +315,24 @@ void setup_server_web(void)
                   String
                       json = "{\n";
 
+                  json += "\"mode_wifi\":" + String("\"") + String(config.MODE_WIFI) + String("\", \n");
                   json += "\"client_tcp\":" + String("\"") + String(Client_Connected) + String("\", \n");
                   json += "\"wifi_rssi\":" + String("\"") + String(WiFi.RSSI()) + String("\", \n");
-                  json += "\"ip_addr\":" + String("\"") + String(ip2Str(WiFi.localIP())) + String("\", \n");
-                  json += "\"mask_addr\":" + String("\"") + String(ip2Str(WiFi.subnetMask())) + String("\", \n");
+
+
+if(String(config.MODE_WIFI) == "STA")
+{
+json += "\"ip_addr\":" + String("\"") + String(ip2Str(WiFi.localIP())) + String("\", \n");
+json += "\"mask_addr\":" + String("\"") + String(ip2Str(WiFi.subnetMask())) + String("\", \n");
+}
+if(String(config.MODE_WIFI) == "AP")
+{
+json += "\"ip_addr\":" + String("\"") + String(ip2Str(WiFi.softAPIP())) + String("\", \n");
+json += "\"mask_addr\":" + String("\"") + String(ip2Str(WiFi.softAPSubnetCIDR())) + String("\", \n");
+}
+                  
+
+                  
                   json += "\"gataway_addr\":" + String("\"") + String(ip2Str(WiFi.gatewayIP())) + String("\", \n");
                   json += "\"free_ram\":" + String("\"") + String(ESP.getFreeHeap()) + String("\", \n");
 
@@ -405,6 +348,8 @@ void setup_server_web(void)
                   json = String();
                 });
 
+
+  web_server.on("/reboot_esp_set", button_reboot_click);
   web_server.on("/save_config_set", button_save_click);
 
   web_server.begin();

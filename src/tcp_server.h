@@ -25,13 +25,10 @@ int Port_TCP = 4001;
 
 int Client_Connected = 0;
 
+
 // const char* ssid = "indconf2002";
 
 // const char* password = "07031968200703196820123456";
-
-const char *ssid = "Padavan 2.4";
-
-const char *password = "46684668";
 
 //#define CONFIG_ENABLE
 IPAddress local_IP(10, 200, 90, 31);
@@ -126,24 +123,46 @@ void setup_tcp_server()
 #ifdef CONFIG_ENABLE
   WiFi.config(local_IP, gateway, subnet, primaryDNS, secondaryDNS);
 #endif
+  
 
-  WiFi.mode(WIFI_STA);
-  WiFi.begin(ssid, password);
-
-  Serial.print("\nConnecting to: ");
-  Serial.println(ssid);
-  uint8_t i = 0;
-
-  while (WiFi.status() != WL_CONNECTED && i++ < 20)
-    delay(500);
-
-  if (i == 21)
+  if(String(config.MODE_WIFI) == "STA")
   {
-    Serial.print("Could not connect to");
-    Serial.println(ssid);
-    while (1)
-      delay(500);
+      WiFi.mode(WIFI_STA);
+      WiFi.begin(config.SSID_CONFIG, config.PASS_CONFIG);
+
+      Serial.print("\nConnecting to: ");
+      Serial.println(config.SSID_CONFIG);
+      uint8_t i = 0;
+
+      while (WiFi.status() != WL_CONNECTED && i++ < 20)
+        delay(500);
+
+      if (i == 21)
+      {
+        Serial.print("Could not connect to");
+        Serial.println(config.SSID_CONFIG);
+        while (1)
+          delay(500);
+      }
+
+
+
   }
+  else if(String(config.MODE_WIFI) == "AP")
+  {
+    IPAddress local_IP(192, 168, 1, 1);
+    IPAddress gateway(192, 168, 1, 254);
+    IPAddress subnet(255, 255, 255, 0);
+
+
+    
+    WiFi.mode(WIFI_AP);
+    WiFi.softAPConfig(local_IP, gateway, subnet);
+    WiFi.softAP(config.SSID_AP_CONFIG, config.PASS_AP_CONFIG);
+    
+  }
+
+ 
 
   server.begin();
   server.setNoDelay(true);
