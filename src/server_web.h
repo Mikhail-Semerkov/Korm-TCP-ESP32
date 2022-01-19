@@ -10,6 +10,50 @@ const char *host = "esp32fs";
 
 File fsUploadFile;
 
+String translateEncryptionType(wifi_auth_mode_t encryptionType)
+{
+  switch (encryptionType)
+  {
+  case (WIFI_AUTH_OPEN):
+    return "Open";
+  case (WIFI_AUTH_WEP):
+    return "WEP";
+  case (WIFI_AUTH_WPA_PSK):
+    return "WPA_PSK";
+  case (WIFI_AUTH_WPA2_PSK):
+    return "WPA2_PSK";
+  case (WIFI_AUTH_WPA_WPA2_PSK):
+    return "WPA_WPA2_PSK";
+  case (WIFI_AUTH_WPA2_ENTERPRISE):
+    return "WPA2_ENTERPRISE";
+  }
+}
+
+void scanNetworks()
+{
+  int numberOfNetworks = WiFi.scanNetworks();
+
+  Serial.print("Number of networks found: ");
+  Serial.println(numberOfNetworks);
+
+  for (int i = 0; i < numberOfNetworks; i++)
+  {
+    Serial.print("Network name: ");
+    Serial.println(WiFi.SSID(i));
+
+    Serial.print("Signal strength: ");
+    Serial.println(WiFi.RSSI(i));
+
+    Serial.print("MAC address: ");
+    Serial.println(WiFi.BSSIDstr(i));
+
+    Serial.print("Encryption type: ");
+    String encryptionTypeDescription = translateEncryptionType(WiFi.encryptionType(i));
+    Serial.println(encryptionTypeDescription);
+    Serial.println("-----------------------");
+  }
+}
+
 String formatBytes(size_t bytes)
 {
   if (bytes < 1024)
@@ -195,45 +239,6 @@ void handleFileList()
   dir.close();
 }
 
-void listDir(fs::FS &fs, const char *dirname, uint8_t levels)
-{
-  Serial.printf("Listing directory: %s\n", dirname);
-
-  File root = fs.open(dirname);
-  if (!root)
-  {
-    Serial.println("Failed to open directory");
-    return;
-  }
-  if (!root.isDirectory())
-  {
-    Serial.println("Not a directory");
-    return;
-  }
-
-  File file = root.openNextFile();
-  while (file)
-  {
-    if (file.isDirectory())
-    {
-      Serial.print("  DIR : ");
-      Serial.println(file.name());
-      if (levels)
-      {
-        listDir(fs, file.name(), levels - 1);
-      }
-    }
-    else
-    {
-      Serial.print("  FILE: ");
-      Serial.print(file.name());
-      Serial.print("  SIZE: ");
-      Serial.println(file.size());
-    }
-    file = root.openNextFile();
-  }
-}
-
 String ip2Str(IPAddress ip)
 {
   String s = "";
@@ -248,7 +253,7 @@ void button_save_click()
 {
   Serial.println(F("Saving configuration..."));
   saveConfiguration(filename, config);
-  web_server.send(200, "text/html", ""); //посылка ответа сервера
+  web_server.send(200, "text/html", "");
   Serial.println(F("Loading configuration..."));
   loadConfiguration(filename, config);
 }
@@ -256,18 +261,28 @@ void button_save_click()
 void button_reboot_click()
 {
   Serial.println(F("Rebooting ESP32..."));
-  web_server.send(200, "text/html", ""); //посылка ответа сервера
+  web_server.send(200, "text/html", "");
   delay(3000);
   ESP.restart();
 }
 
+void wi_wi_scan_click()
+{
+  Serial.println(F("WiFi Scan ESP32..."));
+  web_server.send(200, "text/html", "");
+  scanNetworks();
+}
+
+void web_settings_set()
+{
+  String serial_baund = web_server.arg("serial_baund");
+  String apikey = web_server.arg("apikey");
+  Serial.println("serial_baund:" + serial_baund + ", apikey: " + apikey);
+  web_server.send(200, "text/plane", "OK");
+}
+
 void setup_server_web(void)
 {
-  SPIFFS.begin();
-  {
-    listDir(SPIFFS, "/", 0);
-    Serial.printf("\n");
-  }
 
   while (!SPIFFS.begin())
   {
@@ -307,16 +322,19 @@ void setup_server_web(void)
                   String
                       json = "{\n";
 
-                  json += "\"mode_wifi\":" + String("\"") + String(config.MODE_WIFI) + String("\", \n");
+                  json += "\"serial_config\":" + String("\"") + config._serial_config + String("\", \n");
+                  json += "\"serial_baund\":" + String("\"") + config._serial_baund + String("\", \n");
+
+                  json += "\"mode_wifi\":" + String("\"") + config._mode_wifi + String("\", \n");
                   json += "\"client_tcp\":" + String("\"") + String(Client_Connected) + String("\", \n");
                   json += "\"wifi_rssi\":" + String("\"") + String(WiFi.RSSI()) + String("\", \n");
 
-                  if (String(config.MODE_WIFI) == "STA")
+                  if (String(config._mode_wifi) == "STA")
                   {
                     json += "\"ip_addr\":" + String("\"") + String(ip2Str(WiFi.localIP())) + String("\", \n");
                     json += "\"mask_addr\":" + String("\"") + String(ip2Str(WiFi.subnetMask())) + String("\", \n");
                   }
-                  if (String(config.MODE_WIFI) == "AP")
+                  if (String(config._mode_wifi) == "AP")
                   {
                     json += "\"ip_addr\":" + String("\"") + String(ip2Str(WiFi.softAPIP())) + String("\", \n");
                     json += "\"mask_addr\":" + String("\"") + String(ip2Str(WiFi.softAPSubnetCIDR())) + String("\", \n");
@@ -325,11 +343,11 @@ void setup_server_web(void)
                   json += "\"gataway_addr\":" + String("\"") + String(ip2Str(WiFi.gatewayIP())) + String("\", \n");
                   json += "\"free_ram\":" + String("\"") + String(ESP.getFreeHeap()) + String("\", \n");
 
-                  json += "\"ssid\":" + String("\"") + String(config.SSID_CONFIG) + String("\", \n");
-                  json += "\"pass\":" + String("\"") + String(config.PASS_CONFIG) + String("\", \n");
-                  json += "\"ssid_ap\":" + String("\"") + String(config.SSID_AP_CONFIG) + String("\", \n");
-                  json += "\"pass_ap\":" + String("\"") + String(config.PASS_AP_CONFIG) + String("\", \n");
-                  json += "\"port_tcp\":" + String("\"") + String(config.PORT_TCP) + String("\"");
+                  json += "\"ssid\":" + String("\"") + config._ssid + String("\", \n");
+                  json += "\"pass\":" + String("\"") + config._pass + String("\", \n");
+                  json += "\"ssid_ap\":" + String("\"") + config._ssid_ap + String("\", \n");
+                  json += "\"pass_ap\":" + String("\"") + config._pass_ap + String("\", \n");
+                  json += "\"port_tcp\":" + String("\"") + config._port_tcp + String("\"");
 
                   json += "\n}";
 
@@ -338,9 +356,11 @@ void setup_server_web(void)
                 });
 
   web_server.on("/reboot_esp_set", button_reboot_click);
-  web_server.on("/save_config_set", button_save_click);
+  web_server.on("/wi_wi_scan_esp_set", wi_wi_scan_click);
+  web_server.on("/web_settings_set", web_settings_set);
 
   web_server.begin();
+
   Serial.println("HTTP web_server started");
 }
 

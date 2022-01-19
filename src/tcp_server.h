@@ -1,35 +1,17 @@
-
-#ifdef DEBUG_ENABLE
-#define DEBUG(x) Serial.println(x)
-#else
-#define DEBUG(x)
-#endif
-
-#ifdef CONFIG_ENABLE
-#define DEBUG(x) Serial.println(x)
-#else
-#define DEBUG(x)
-#endif
-
 ////////////////// GLOBAL SETTINGS //////////////////
-
-//#define DEBUG_ENABLE
 
 #include <WiFi.h>
 
 #define MAX_SRV_CLIENTS 4
 
-int SERIAL_BAUND = 9600;
+int Client_Connected = 0;
+
+///////////////// PARAM SETTINGS ////////////////////
+
+bool DHCP = true;
 
 int Port_TCP = 4001;
 
-int Client_Connected = 0;
-
-// const char* ssid = "indconf2002";
-
-// const char* password = "07031968200703196820123456";
-
-//#define CONFIG_ENABLE
 IPAddress local_IP(10, 200, 90, 31);
 IPAddress gateway(10, 200, 90, 254);
 IPAddress subnet(255, 255, 252, 0);
@@ -43,6 +25,7 @@ WiFiClient serverClients[MAX_SRV_CLIENTS];
 
 void Check_UART()
 {
+
   uint8_t i;
 
   if (Serial1.available())
@@ -112,24 +95,21 @@ void Check_TCP()
 
 void setup_tcp_server()
 {
-
-  Serial.begin(SERIAL_BAUND);
-  Serial1.begin(SERIAL_BAUND, SERIAL_7E1);
-
   //WiFi.setAutoConnect(true);
   WiFi.setAutoReconnect(true);
 
-#ifdef CONFIG_ENABLE
-  WiFi.config(local_IP, gateway, subnet, primaryDNS, secondaryDNS);
-#endif
+  if (DHCP != true)
+  {
+    WiFi.config(local_IP, gateway, subnet, primaryDNS, secondaryDNS);
+  }
 
-  if (String(config.MODE_WIFI) == "STA")
+  if (String(config._mode_wifi) == "STA")
   {
     WiFi.mode(WIFI_STA);
-    WiFi.begin(config.SSID_CONFIG, config.PASS_CONFIG);
+    WiFi.begin(config._ssid.c_str(), config._pass.c_str());
 
     Serial.print("\nConnecting to: ");
-    Serial.println(config.SSID_CONFIG);
+    Serial.println(config._ssid);
     uint8_t i = 0;
 
     while (WiFi.status() != WL_CONNECTED && i++ < 20)
@@ -138,12 +118,12 @@ void setup_tcp_server()
     if (i == 21)
     {
       Serial.print("Could not connect to");
-      Serial.println(config.SSID_CONFIG);
+      Serial.println(config._ssid);
       while (1)
         delay(500);
     }
   }
-  else if (String(config.MODE_WIFI) == "AP")
+  else if (String(config._mode_wifi) == "AP")
   {
     IPAddress local_IP(192, 168, 1, 1);
     IPAddress gateway(192, 168, 1, 254);
@@ -151,7 +131,7 @@ void setup_tcp_server()
 
     WiFi.mode(WIFI_AP);
     WiFi.softAPConfig(local_IP, gateway, subnet);
-    WiFi.softAP(config.SSID_AP_CONFIG, config.PASS_AP_CONFIG);
+    WiFi.softAP(config._ssid_ap.c_str(), config._pass_ap.c_str());
   }
 
   server.begin();

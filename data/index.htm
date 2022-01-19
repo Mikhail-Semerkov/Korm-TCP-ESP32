@@ -38,7 +38,7 @@
 
         <div style="margin-bottom: 5%"></div>
 
-        <button class="accordion">Network Settings</button>
+        <button class="accordion">Настройка сети</button>
         <div class="panel">
           <div class="settings">
             <span class="settings__title setting-title">Режим Wi-Fi</span>
@@ -47,6 +47,16 @@
             <option value="WIFI_STA">WiFi mode STA</option>
             <option value="WIFI_AP">WiFi mode AP</option>
           </select>
+
+          <div style="margin-bottom: 5%"></div>
+
+          <a
+            href="#"
+            class="button_style"
+            onclick="wi_wi_scan_esp_click()"
+            id="wi_fi_scan"
+            >Сканировать Wi-Fi</a
+          >
 
           <div style="margin-bottom: 5%"></div>
 
@@ -73,20 +83,74 @@
               placeholder="Password"
             />
           </div>
+
+          <div>
+            <div class="settings">
+              <span class="settings__title setting-title">Порт TCP</span>
+            </div>
+            <input
+              type="text"
+              class="textbox_style"
+              id="Text_Port"
+              placeholder=""
+            />
+          </div>
         </div>
 
-        <button class="accordion">Serial Settings</button>
+        <button class="accordion">Настройки серийного порта</button>
         <div class="panel">
           <div class="settings">
-            <span class="settings__title setting-title">Data Size</span>
+            <span class="settings__title setting-title"
+              >Конфигурация серийного порта</span
+            >
           </div>
-          <select class="select-css" id="select_time_antiotravlenie">
+          <select class="select-css" id="select_serial_config">
+            <option value="SERIAL_5N1">SERIAL_5N1</option>
+            <option value="SERIAL_6N1">SERIAL_6N1</option>
+            <option value="SERIAL_7N1">SERIAL_7N1</option>
+            <option value="SERIAL_8N1">SERIAL_8N1</option>
+            <option value="SERIAL_5N2">SERIAL_5N2</option>
+            <option value="SERIAL_6N2">SERIAL_6N2</option>
+            <option value="SERIAL_7N2">SERIAL_7N2</option>
+            <option value="SERIAL_8N2">SERIAL_8N2</option>
+            <option value="SERIAL_5E1">SERIAL_5E1</option>
+            <option value="SERIAL_6E1">SERIAL_6E1</option>
             <option value="SERIAL_7E1">SERIAL_7E1</option>
             <option value="SERIAL_8E1">SERIAL_8E1</option>
+            <option value="SERIAL_5E2">SERIAL_5E2</option>
+            <option value="SERIAL_6E2">SERIAL_6E2</option>
+            <option value="SERIAL_7E2">SERIAL_7E2</option>
+            <option value="SERIAL_8E2">SERIAL_8E2</option>
+            <option value="SERIAL_5O1">SERIAL_5O1</option>
+            <option value="SERIAL_6O1">SERIAL_6O1</option>
+            <option value="SERIAL_7O1">SERIAL_7O1</option>
+            <option value="SERIAL_8O1">SERIAL_8O1</option>
+            <option value="SERIAL_5O2">SERIAL_5O2</option>
+            <option value="SERIAL_6O2">SERIAL_6O2</option>
+            <option value="SERIAL_7O2">SERIAL_7O2</option>
+            <option value="SERIAL_8O2">SERIAL_8O2</option>
+          </select>
+
+          <div class="settings">
+            <span class="settings__title setting-title">Скорость</span>
+          </div>
+
+          <select class="select-css" id="select_serial_baund">
+            <option value="600">600</option>
+            <option value="1200">1200</option>
+            <option value="2400">2400</option>
+            <option value="4800">4800</option>
+            <option value="9600">9600</option>
+            <option value="14400">14400</option>
+            <option value="19200">19200</option>
+            <option value="38400">38400</option>
+            <option value="56000">56000</option>
+            <option value="57600">57600</option>
+            <option value="115200">115200</option>
           </select>
         </div>
 
-        <button class="accordion">Information</button>
+        <button class="accordion">Информация</button>
         <div class="panel">
           <div class="settings">
             <span class="settings__title setting-title">Информация</span>
@@ -135,8 +199,8 @@
       <a
         href="#"
         class="button_style"
-        onclick="button_click_save()"
-        id="button_save"
+        onclick="all_save_config()"
+        id="button_reboot"
         >Сохранить</a
       >
 
@@ -152,7 +216,8 @@
 
       <div class="title_podval">Korm TCP Server by M.Semerkov</div>
     </div>
-  </body>
 
-  <script type="text/javascript" src="js/accordion.js"></script>
+    <script type="text/javascript" src="js/accordion.js"></script>
+    <script type="text/javascript" src="js/set_parametrs.js"></script>
+  </body>
 </html>

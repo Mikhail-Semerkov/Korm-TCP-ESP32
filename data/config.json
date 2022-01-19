@@ -1,0 +1,16 @@
+{
+"serial_config":"SERIAL_7E1", 
+"serial_baund":"9600", 
+"mode_wifi":"STA", 
+"client_tcp":"0", 
+"wifi_rssi":"-68", 
+"ip_addr":"10.170.172.234", 
+"mask_addr":"255.255.252.0", 
+"gataway_addr":"10.170.175.254", 
+"free_ram":"259412", 
+"ssid":"Padavan 2.4", 
+"pass":"07031968200703196820123456", 
+"ssid_ap":"Korm TCP Server", 
+"pass_ap":"12345678", 
+"port_tcp":"4005"
+}

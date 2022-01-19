@@ -4,12 +4,8 @@
 
 struct Config
 {
-  char MODE_WIFI[64];
-  char SSID_CONFIG[64];
-  char PASS_CONFIG[64];
-  char SSID_AP_CONFIG[64];
-  char PASS_AP_CONFIG[64];
-  int PORT_TCP;
+
+  String _serial_config, _serial_baund, _mode_wifi, _client_tcp, _wifi_rssi, _ip_addr, _mask_addr, _gataway_addr, _free_ram, _ssid, _pass, _ssid_ap, _pass_ap, _port_tcp;
 };
 
 const char *filename = "/config.json";
@@ -18,35 +14,20 @@ Config config;
 void loadConfiguration(const char *filename, Config &config)
 {
 
-  Serial.println(F("Loading configuration..."));
-
   File file = SPIFFS.open(filename);
   StaticJsonDocument<512> doc;
   DeserializationError error = deserializeJson(doc, file);
   if (error)
     Serial.println(F("Failed to read file, using default configuration"));
 
-  strlcpy(config.MODE_WIFI,
-          doc["mode_wifi"] | "STA",
-          sizeof(config.MODE_WIFI));
-
-  strlcpy(config.SSID_CONFIG,
-          doc["ssid"] | "indconf2002",
-          sizeof(config.SSID_CONFIG));
-
-  strlcpy(config.PASS_CONFIG,
-          doc["pass"] | "07031968200703196820123456",
-          sizeof(config.PASS_CONFIG));
-
-  strlcpy(config.SSID_AP_CONFIG,
-          doc["ssid_ap"] | "Korm TCP Server",
-          sizeof(config.SSID_AP_CONFIG));
-
-  strlcpy(config.PASS_AP_CONFIG,
-          doc["pass_ap"] | "12345678",
-          sizeof(config.PASS_CONFIG));
-
-  config.PORT_TCP = doc["port_tcp"] | 4001;
+  config._serial_config = doc["serial_config"] | "SERIAL_7E1";
+  config._serial_baund = doc["serial_baund"] | "9600";
+  config._mode_wifi = doc["mode_wifi"] | "STA";
+  config._ssid = doc["ssid"] | "indconf2002";
+  config._pass = doc["pass"] | "07031968200703196820123456";
+  config._ssid_ap = doc["ssid_ap"] | "Korm TCP Server";
+  config._pass_ap = doc["pass_ap"] | "12345678";
+  config._port_tcp = doc["port_tcp"] | "4001";
 
   file.close();
 }
@@ -62,11 +43,14 @@ void saveConfiguration(const char *filename, const Config &config)
   }
   StaticJsonDocument<256> doc;
 
-  doc["ssid"] = "Padavan 2.4";
-  doc["pass"] = config.PASS_CONFIG;
-  doc["ssid_ap"] = config.SSID_AP_CONFIG;
-  doc["pass_ap"] = config.PASS_AP_CONFIG;
-  doc["port_tcp"] = 4005;
+  doc["serial_config"] = config._serial_config;
+  doc["serial_baund"] = config._serial_baund;
+  doc["mode_wifi"] = config._mode_wifi;
+  doc["ssid"] = config._ssid;
+  doc["pass"] = config._pass_ap;
+  doc["ssid_ap"] = config._ssid_ap;
+  doc["pass_ap"] = config._pass_ap;
+  doc["port_tcp"] = config._port_tcp;
 
   if (serializeJson(doc, file) == 0)
   {
