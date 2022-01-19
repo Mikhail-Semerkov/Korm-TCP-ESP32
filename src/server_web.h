@@ -249,15 +249,6 @@ String ip2Str(IPAddress ip)
   return s;
 }
 
-void button_save_click()
-{
-  Serial.println(F("Saving configuration..."));
-  saveConfiguration(filename, config);
-  web_server.send(200, "text/html", "");
-  Serial.println(F("Loading configuration..."));
-  loadConfiguration(filename, config);
-}
-
 void button_reboot_click()
 {
   Serial.println(F("Rebooting ESP32..."));
@@ -275,20 +266,21 @@ void wi_wi_scan_click()
 
 void web_settings_set()
 {
-  String serial_baund = web_server.arg("serial_baund");
-  String apikey = web_server.arg("apikey");
-  Serial.println("serial_baund:" + serial_baund + ", apikey: " + apikey);
+  config._serial_config = web_server.arg("serial_config");
+  config._serial_baund = web_server.arg("serial_baund");
+
+  Serial.println("serial_config:" + config._serial_config + ", serial_baund: " + config._serial_baund);
   web_server.send(200, "text/plane", "OK");
+
+  Serial.println(F("Saving configuration..."));
+  saveConfiguration(filename, config);
+
+  //Serial.println(F("Loading configuration..."));
+  //loadConfiguration(filename, config);
 }
 
 void setup_server_web(void)
 {
-
-  while (!SPIFFS.begin())
-  {
-    Serial.println(F("Failed to initialize SD library"));
-    delay(1000);
-  }
 
   Serial.println(F("Print config file..."));
   printFile(filename);

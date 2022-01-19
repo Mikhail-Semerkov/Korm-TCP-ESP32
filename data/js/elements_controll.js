@@ -1,5 +1,8 @@
 var select_serial_config = document.getElementById("select_serial_config");
-//Reboot сохранить
+var select_mode_wifi = document.getElementById("select_mode_wifi");
+var select_serial_baund = document.getElementById("select_serial_baund");
+
+//Reboot
 function reboot_esp_click() {
   var isAdmin = confirm("Подтвердите перезагрузку?");
   if (isAdmin == true) {
@@ -24,13 +27,10 @@ function all_save_config()
             select_serial_config.innerHTML = this.responseText;
         }
     };
-    request.open("GET", "web_settings_set?serial_baund=" + select_serial_config.value + "&apikey=12345", true);
+    request.open("GET", "web_settings_set?serial_config=" + select_serial_config.value + "&serial_baund=" + select_serial_baund.value, true);
     request.send();
-  console.log("Select Effect Front: " + select_serial_config.value);
-  
-
-  
-    
+  console.log("select_serial_config: " + select_serial_config.value);
+console.log("select_serial_baund: " + select_serial_baund.value);
 }
 
 

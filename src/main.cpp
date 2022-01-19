@@ -4,12 +4,13 @@
 #include <tcp_server.h>
 #include <server_web.h>
 
+
 void setup()
 {
   loadConfiguration(filename, config);
 
   Serial.begin(config._serial_baund.toInt());
-  Serial1.begin(config._serial_baund.toInt(), SERIAL_7E1);
+  Serial1.begin(config._serial_baund.toInt(), SERIAL_7N1);
 
   setup_tcp_server();
 
@@ -21,4 +22,6 @@ void loop()
   loop_tcp_server();
 
   loop_server_web();
+
+  btn_default();
 }
