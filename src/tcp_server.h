@@ -8,15 +8,11 @@ int Client_Connected = 0;
 
 ///////////////// PARAM SETTINGS ////////////////////
 
-bool DHCP = true;
+bool DHCP;
 
 int Port_TCP = 4001;
 
-IPAddress local_IP(10, 200, 90, 31);
-IPAddress gateway(10, 200, 90, 254);
-IPAddress subnet(255, 255, 252, 0);
-IPAddress primaryDNS(8, 8, 8, 8);
-IPAddress secondaryDNS(8, 8, 4, 4);
+IPAddress local_IP, gateway, subnet, primaryDNS, secondaryDNS;
 
 ///////////////////////////////////////////////////
 
@@ -59,7 +55,7 @@ void Check_Clients()
         if (serverClients[i])
           serverClients[i].stop();
         serverClients[i] = server.available();
-        Client_Connected = i;
+        Client_Connected = i + 1;
         Serial.print("New client: ");
         Serial.print(Client_Connected);
         Serial.println();
@@ -87,7 +83,13 @@ void Check_TCP()
       if (serverClients[i].available())
       {
         while (serverClients[i].available())
-          Serial1.write(serverClients[i].read());
+          if (serverClients[i].readString() == "SN")
+          {
+            serverClients[i].write("00000000");
+          }
+
+        Serial1.write(serverClients[i].read());
+        Serial.write(serverClients[i].read());
       }
     }
   }
@@ -95,12 +97,20 @@ void Check_TCP()
 
 void setup_tcp_server()
 {
+
+  DHCP = bool(config._dhcp.toInt());
+
   WiFi.setAutoConnect(true);
   WiFi.setAutoReconnect(true);
 
-  if (DHCP != true)
+  if (DHCP == true)
   {
-    WiFi.config(local_IP, gateway, subnet, primaryDNS, secondaryDNS);
+    local_IP.fromString(config._static_ip);
+    gateway.fromString(config._static_gataway);
+    subnet.fromString(config._static_mask);
+
+    Serial.println("Static Local Ok");
+    WiFi.config(local_IP, gateway, subnet);
   }
 
   if (String(config._mode_wifi) == "WIFI_STA")

@@ -54,7 +54,20 @@ function all_save_config() {
       settings_mode_serial.value +
       "&" +
       "serial_baund=" +
-      settings_serial_baund.value;
+      settings_serial_baund.value +
+      "&" +
+      "dhcp=" +
+      settings_dhcp.value +
+      "&" +
+      "static_ip=" +
+      settings_static_ip.value +
+      "&" +
+      "static_mask=" +
+      settings_static_mask.value +
+      "&" +
+      "static_gataway=" +
+      settings_static_gataway.value;
+      
 
     request.open("GET", GET_Server, true);
     request.send();

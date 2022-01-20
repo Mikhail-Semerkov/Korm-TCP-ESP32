@@ -16,7 +16,11 @@ var mode_serial,
   wifi_pass,
   wifi_ssid_ap,
   wifi_pass_ap,
-  port_tcp;
+  port_tcp,
+dhcp,
+static_ip,
+static_mask,
+  static_gataway;
 
 var conf_mode_wifi;
 var conf_ip_addr;
@@ -40,6 +44,11 @@ var settings_wifi_pass;
 var settings_port_tcp;
 var settings_mode_serial;
 var settings_serial_baund;
+
+var settings_dhcp;
+var settings_static_ip;
+var settings_static_mask;
+var settings_static_gataway;
 
 
 var label_mode_wifi;
@@ -81,6 +90,10 @@ function loadValues() {
         settings_port_tcp = document.getElementById("settings_port_tcp"); 
         settings_mode_serial = document.getElementById("settings_mode_serial"); 
         settings_serial_baund = document.getElementById("settings_serial_baund"); 
+        settings_dhcp = document.getElementById("settings_dhcp");
+        settings_static_ip = document.getElementById("settings_static_ip");
+        settings_static_mask = document.getElementById("settings_static_mask");
+        settings_static_gataway = document.getElementById("settings_static_gataway");
 
 
         ///////////////////////////////////////////////////////////////////
@@ -120,6 +133,10 @@ function loadValues() {
           settings_port_tcp.value = res.port_tcp;
           settings_mode_serial.value = res.mode_serial;
           settings_serial_baund.value = res.serial_baund;
+          settings_dhcp.value = res.dhcp;
+          settings_static_ip.value = res.static_ip;
+          settings_static_mask.value = res.static_mask;
+          settings_static_gataway.value = res.static_gataway;
 
 
           label_mode_wifi.textContent = res.mode_wifi + "_MODE";
@@ -131,10 +148,10 @@ function loadValues() {
     settings_mode_sta.style = "display:none";
     settings_mode_ap.style = "";
   }
-  if (change_mode_wifi.value == "WIFI_STA") {
-    settings_mode_sta.style = "";
-    settings_mode_ap.style = "display:none";
-  }
+       if (change_mode_wifi.value == "WIFI_STA") {
+            settings_mode_sta.style = "";
+           settings_mode_ap.style = "display:none";
+        }
           setting_load = true;
         }
 

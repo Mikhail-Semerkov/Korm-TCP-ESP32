@@ -274,13 +274,22 @@ void save_web_config()
   config._port_tcp = web_server.arg("port_tcp");
   config._mode_serial = web_server.arg("mode_serial");
   config._serial_baund = web_server.arg("serial_baund");
+  config._dhcp = web_server.arg("dhcp");
+  config._static_ip = web_server.arg("static_ip");
+  config._static_mask = web_server.arg("static_mask");
+  config._static_gataway = web_server.arg("static_gataway");
 
   String Data = "mode_wifi: " + config._mode_wifi +
                 ", wifi_ssid: " + config._wifi_ssid +
                 ", wifi_pass: " + config._wifi_pass +
                 ", port_tcp: " + config._port_tcp +
                 ", mode_serial: " + config._mode_serial +
-                ", serial_baund: " + config._serial_baund;
+                ", serial_baund: " + config._serial_baund +
+
+                ", dhcp: " + config._dhcp +
+                ", static_ip: " + config._static_ip +
+                ", static_mask: " + config._static_mask +
+                ", static_gataway: " + config._static_gataway;
 
   web_server.send(200, "text/plane", "OK");
 
@@ -350,7 +359,12 @@ void setup_server_web(void)
                   json += "\"wifi_pass\":" + String("\"") + config._wifi_pass + String("\", \n");
                   json += "\"wifi_ssid_ap\":" + String("\"") + config._wifi_ssid_ap + String("\", \n");
                   json += "\"wifi_pass_ap\":" + String("\"") + config._wifi_pass_ap + String("\", \n");
-                  json += "\"port_tcp\":" + String("\"") + config._port_tcp + String("\"");
+                  json += "\"port_tcp\":" + String("\"") + config._port_tcp + String("\", \n");
+
+                  json += "\"dhcp\":" + String("\"") + config._dhcp + String("\", \n");
+                  json += "\"static_ip\":" + String("\"") + config._static_ip + String("\", \n");
+                  json += "\"static_mask\":" + String("\"") + config._static_mask + String("\", \n");
+                  json += "\"static_gataway\":" + String("\"") + config._static_gataway + String("\"");
 
                   json += "\n}";
 

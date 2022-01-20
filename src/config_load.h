@@ -4,7 +4,7 @@
 
 struct Config
 {
-  String _mode_serial, _serial_baund, _mode_wifi, _client_tcp, _wifi_rssi, _ip_addr, _mask_addr, _gataway_addr, _free_ram, _wifi_ssid, _wifi_pass, _wifi_ssid_ap, _wifi_pass_ap, _port_tcp;
+  String _mode_serial, _serial_baund, _mode_wifi, _client_tcp, _wifi_rssi, _ip_addr, _mask_addr, _gataway_addr, _free_ram, _wifi_ssid, _wifi_pass, _wifi_ssid_ap, _wifi_pass_ap, _port_tcp, _dhcp, _static_ip, _static_mask, _static_gataway;
 };
 
 const char *filename = "/config.json";
@@ -18,7 +18,7 @@ void loadConfiguration(const char *filename, Config &config)
     delay(1000);
   }
   File file = SPIFFS.open(filename);
-  StaticJsonBuffer<512> jsonBuffer;
+  StaticJsonBuffer<1024> jsonBuffer;
   JsonObject &root = jsonBuffer.parseObject(file);
 
   if (!root.success())
@@ -32,6 +32,10 @@ void loadConfiguration(const char *filename, Config &config)
   config._wifi_ssid_ap = root["wifi_ssid_ap"] | "Korm TCP Server";
   config._wifi_pass_ap = root["wifi_pass_ap"] | "12345678";
   config._port_tcp = root["wifi_port_tcp"] | "4001";
+  config._dhcp = root["dhcp"] | "0";
+  config._static_ip = root["static_ip"] | "10.200.1.30";
+  config._static_mask = root["static_mask"] | "255.255.252.0";
+  config._static_gataway = root["static_gataway"] | "10.200.1.1";
 
   file.close();
 }
@@ -48,7 +52,7 @@ void saveConfiguration(const char *filename, const Config &config)
     return;
   }
 
-  StaticJsonBuffer<512> jsonBuffer;
+  StaticJsonBuffer<1024> jsonBuffer;
   JsonObject &root = jsonBuffer.createObject();
 
   root["mode_serial"] = config._mode_serial;
@@ -65,6 +69,10 @@ void saveConfiguration(const char *filename, const Config &config)
   root["wifi_ssid_ap"] = config._wifi_ssid_ap;
   root["wifi_pass_ap"] = config._wifi_pass_ap;
   root["port_tcp"] = config._port_tcp;
+  root["dhcp"] = config._dhcp;
+  root["static_ip"] = config._static_ip;
+  root["static_mask"] = config._static_mask;
+  root["static_gataway"] = config._static_gataway;
 
   if (root.printTo(file) == 0)
   {
