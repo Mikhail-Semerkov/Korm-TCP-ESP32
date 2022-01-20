@@ -95,7 +95,7 @@ void Check_TCP()
 
 void setup_tcp_server()
 {
-  //WiFi.setAutoConnect(true);
+  WiFi.setAutoConnect(true);
   WiFi.setAutoReconnect(true);
 
   if (DHCP != true)
@@ -103,13 +103,13 @@ void setup_tcp_server()
     WiFi.config(local_IP, gateway, subnet, primaryDNS, secondaryDNS);
   }
 
-  if (String(config._mode_wifi) == "STA")
+  if (String(config._mode_wifi) == "WIFI_STA")
   {
     WiFi.mode(WIFI_STA);
-    WiFi.begin(config._ssid.c_str(), config._pass.c_str());
+    WiFi.begin(config._wifi_ssid.c_str(), config._wifi_pass.c_str());
 
     Serial.print("\nConnecting to: ");
-    Serial.println(config._ssid);
+    Serial.println(config._wifi_ssid);
     uint8_t i = 0;
 
     while (WiFi.status() != WL_CONNECTED && i++ < 20)
@@ -118,12 +118,12 @@ void setup_tcp_server()
     if (i == 21)
     {
       Serial.print("Could not connect to");
-      Serial.println(config._ssid);
-      while (1)
-        delay(500);
+      Serial.println(config._wifi_ssid);
+      //while (1)
+      delay(500);
     }
   }
-  else if (String(config._mode_wifi) == "AP")
+  else if (String(config._mode_wifi) == "WIFI_AP")
   {
     IPAddress local_IP(192, 168, 1, 1);
     IPAddress gateway(192, 168, 1, 254);
@@ -131,7 +131,7 @@ void setup_tcp_server()
 
     WiFi.mode(WIFI_AP);
     WiFi.softAPConfig(local_IP, gateway, subnet);
-    WiFi.softAP(config._ssid_ap.c_str(), config._pass_ap.c_str());
+    WiFi.softAP(config._wifi_ssid_ap.c_str(), config._wifi_pass_ap.c_str());
   }
 
   server.begin();

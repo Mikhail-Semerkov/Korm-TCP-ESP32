@@ -76,8 +76,10 @@
 }
 
 .container {
+  text-align: center;
   margin: auto;
-  width: 25%;
+
+  width: 30%;
   padding: 10px 25px;
   background: #0a0e31;
   border-radius: 10px;
@@ -347,9 +349,9 @@ a.button_style:active {
 }
 
 .text_setting {
-  color: #fff;
   text-align: center;
-  font-size: 14px;
+  color: #fff;
+  font-size: 12px;
 }
 
 .title_podval {

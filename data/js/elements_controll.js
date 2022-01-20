@@ -1,13 +1,27 @@
-var select_serial_config = document.getElementById("select_serial_config");
-var select_mode_wifi = document.getElementById("select_mode_wifi");
-var select_serial_baund = document.getElementById("select_serial_baund");
+var request = new XMLHttpRequest();
+
+var settings_mode_ap = document.getElementById("settings_mode_ap");
+var settings_mode_sta = document.getElementById("settings_mode_sta");
+
+var change_mode_wifi = document.getElementById("settings_mode_wifi");
+
+change_mode_wifi.addEventListener("change", function () {
+  if (change_mode_wifi.value == "WIFI_AP") {
+    settings_mode_sta.style = "display:none";
+    settings_mode_ap.style = "";
+  }
+  if (change_mode_wifi.value == "WIFI_STA") {
+    settings_mode_sta.style = "";
+    settings_mode_ap.style = "display:none";
+  }
+});
 
 //Reboot
-function reboot_esp_click() {
-  var isAdmin = confirm("Подтвердите перезагрузку?");
+function button_default_reset() {
+  var isAdmin = confirm("Сбросить все настройки?");
   if (isAdmin == true) {
-    console.log("Reboot ESP32");
-    request.open("GET", "/reboot_esp_set", true);
+    console.log("Default Setting");
+    request.open("GET", "/default_settings_esp_set", true);
     request.send();
   }
 }
@@ -19,25 +33,40 @@ function wi_wi_scan_esp_click() {
   request.send();
 }
 
+function all_save_config() {
+  var Save = confirm("Сохранить текущие натройки?");
+  if (Save == true) {
+    var GET_Server =
+      "save_web_config_set?" +
+      "mode_wifi=" +
+      settings_mode_wifi.value +
+      "&" +
+      "wifi_ssid=" +
+      settings_wifi_ssid.value +
+      "&" +
+      "wifi_pass=" +
+      settings_wifi_pass.value +
+      "&" +
+      "port_tcp=" +
+      settings_port_tcp.value +
+      "&" +
+      "mode_serial=" +
+      settings_mode_serial.value +
+      "&" +
+      "serial_baund=" +
+      settings_serial_baund.value;
 
-function all_save_config()
-{
-    select_serial_config.onreadystatechange = function () {
-        if (this.readyState == 4 && this.status == 200) {
-            select_serial_config.innerHTML = this.responseText;
-        }
-    };
-    request.open("GET", "web_settings_set?serial_config=" + select_serial_config.value + "&serial_baund=" + select_serial_baund.value, true);
+    request.open("GET", GET_Server, true);
     request.send();
-  console.log("select_serial_config: " + select_serial_config.value);
-console.log("select_serial_baund: " + select_serial_baund.value);
+
+    alert("Настройки сохранены!");
+
+    var Reboot = confirm("Требуется перезагрузка! Перезагрузить сейчас?");
+  }
+
+  if (Reboot == true) {
+    console.log("Reboot ESP32");
+    request.open("GET", "/reboot_esp_set", true);
+    request.send();
+  }
 }
-
-
-
-
-
-
-
-
-

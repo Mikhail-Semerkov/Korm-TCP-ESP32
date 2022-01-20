@@ -10,7 +10,7 @@ void setup()
   loadConfiguration(filename, config);
 
   Serial.begin(config._serial_baund.toInt());
-  Serial1.begin(config._serial_baund.toInt(), SERIAL_7N1);
+  Serial1.begin(config._serial_baund.toInt(), SERIAL_7E1);
 
   setup_tcp_server();
 
@@ -19,9 +19,9 @@ void setup()
 
 void loop()
 {
+  btn_default();
+
   loop_tcp_server();
 
   loop_server_web();
-
-  btn_default();
 }

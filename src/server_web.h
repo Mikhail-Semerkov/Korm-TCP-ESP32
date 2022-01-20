@@ -264,19 +264,42 @@ void wi_wi_scan_click()
   scanNetworks();
 }
 
-void web_settings_set()
+void save_web_config()
 {
-  config._serial_config = web_server.arg("serial_config");
+
+  config._mode_wifi = web_server.arg("mode_wifi");
+  config._wifi_ssid = web_server.arg("wifi_ssid");
+
+  config._wifi_pass = web_server.arg("wifi_pass");
+  config._port_tcp = web_server.arg("port_tcp");
+  config._mode_serial = web_server.arg("mode_serial");
   config._serial_baund = web_server.arg("serial_baund");
 
-  Serial.println("serial_config:" + config._serial_config + ", serial_baund: " + config._serial_baund);
+  String Data = "mode_wifi: " + config._mode_wifi +
+                ", wifi_ssid: " + config._wifi_ssid +
+                ", wifi_pass: " + config._wifi_pass +
+                ", port_tcp: " + config._port_tcp +
+                ", mode_serial: " + config._mode_serial +
+                ", serial_baund: " + config._serial_baund;
+
   web_server.send(200, "text/plane", "OK");
 
   Serial.println(F("Saving configuration..."));
+
   saveConfiguration(filename, config);
 
-  //Serial.println(F("Loading configuration..."));
-  //loadConfiguration(filename, config);
+  Serial.println(Data);
+
+  // Serial.println(F("Loading configuration..."));
+  // loadConfiguration(filename, config);
+}
+
+void default_settings_esp()
+{
+  Serial.println("Reset ESP32");
+  Serial.println("Read default config");
+  SPIFFS.remove("/config.json");
+  ESP.restart();
 }
 
 void setup_server_web(void)
@@ -309,36 +332,24 @@ void setup_server_web(void)
                             web_server.send(404, "text/plain", "FileNotFound");
                         });
 
-  web_server.on("/all", HTTP_GET, []()
+  web_server.on("/json", HTTP_GET, []()
                 {
                   String
                       json = "{\n";
 
-                  json += "\"serial_config\":" + String("\"") + config._serial_config + String("\", \n");
+                  json += "\"mode_serial\":" + String("\"") + config._mode_serial + String("\", \n");
                   json += "\"serial_baund\":" + String("\"") + config._serial_baund + String("\", \n");
-
                   json += "\"mode_wifi\":" + String("\"") + config._mode_wifi + String("\", \n");
                   json += "\"client_tcp\":" + String("\"") + String(Client_Connected) + String("\", \n");
                   json += "\"wifi_rssi\":" + String("\"") + String(WiFi.RSSI()) + String("\", \n");
-
-                  if (String(config._mode_wifi) == "STA")
-                  {
-                    json += "\"ip_addr\":" + String("\"") + String(ip2Str(WiFi.localIP())) + String("\", \n");
-                    json += "\"mask_addr\":" + String("\"") + String(ip2Str(WiFi.subnetMask())) + String("\", \n");
-                  }
-                  if (String(config._mode_wifi) == "AP")
-                  {
-                    json += "\"ip_addr\":" + String("\"") + String(ip2Str(WiFi.softAPIP())) + String("\", \n");
-                    json += "\"mask_addr\":" + String("\"") + String(ip2Str(WiFi.softAPSubnetCIDR())) + String("\", \n");
-                  }
-
+                  json += "\"ip_addr\":" + String("\"") + String(ip2Str(WiFi.localIP())) + String("\", \n");
+                  json += "\"mask_addr\":" + String("\"") + String(ip2Str(WiFi.subnetMask())) + String("\", \n");
                   json += "\"gataway_addr\":" + String("\"") + String(ip2Str(WiFi.gatewayIP())) + String("\", \n");
                   json += "\"free_ram\":" + String("\"") + String(ESP.getFreeHeap()) + String("\", \n");
-
-                  json += "\"ssid\":" + String("\"") + config._ssid + String("\", \n");
-                  json += "\"pass\":" + String("\"") + config._pass + String("\", \n");
-                  json += "\"ssid_ap\":" + String("\"") + config._ssid_ap + String("\", \n");
-                  json += "\"pass_ap\":" + String("\"") + config._pass_ap + String("\", \n");
+                  json += "\"wifi_ssid\":" + String("\"") + config._wifi_ssid + String("\", \n");
+                  json += "\"wifi_pass\":" + String("\"") + config._wifi_pass + String("\", \n");
+                  json += "\"wifi_ssid_ap\":" + String("\"") + config._wifi_ssid_ap + String("\", \n");
+                  json += "\"wifi_pass_ap\":" + String("\"") + config._wifi_pass_ap + String("\", \n");
                   json += "\"port_tcp\":" + String("\"") + config._port_tcp + String("\"");
 
                   json += "\n}";
@@ -349,7 +360,8 @@ void setup_server_web(void)
 
   web_server.on("/reboot_esp_set", button_reboot_click);
   web_server.on("/wi_wi_scan_esp_set", wi_wi_scan_click);
-  web_server.on("/web_settings_set", web_settings_set);
+  web_server.on("/save_web_config_set", save_web_config);
+  web_server.on("/default_settings_esp_set", default_settings_esp);
 
   web_server.begin();
 

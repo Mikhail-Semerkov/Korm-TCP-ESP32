@@ -11,77 +11,60 @@
     <div class="container">
       <h2 class="title">Korm TCP Server</h2>
 
-      <div class="settings">
-        <span class="settings__title setting-title">Информация</span>
-      </div>
       <div class="result_label">
-        <label class="text_setting" id="FREE_RAM">RAM</label>
+        <label class="text_setting" id="label_mode_wifi">MODE</label>
       </div>
-
-      <div style="margin-bottom: 2%"></div>
-
-      <div class="result_label">
-        <label class="text_setting" id="WIFI_RSSI">RSSI</label>
-      </div>
-
-      <div class="result_label">
-        <label class="text_setting" id="MODE_WIFI_RESULT">MODE</label>
-      </div>
-
-      <div style="margin-bottom: 5%"></div>
 
       <div class="settings">
-        <div class="settings">
-          <span class="settings__title setting-title">IP адрес</span>
-        </div>
-        <div class="result__viewbox" id="IP_ADDR_RESULT">192.168.1.1</div>
-
         <div style="margin-bottom: 5%"></div>
-
-        <button class="accordion">Настройка сети</button>
+        <button class="accordion">Network Settings</button>
         <div class="panel">
           <div class="settings">
             <span class="settings__title setting-title">Режим Wi-Fi</span>
           </div>
-          <select class="select-css" id="select_mode_wifi">
+          <select class="select-css" id="settings_mode_wifi">
             <option value="WIFI_STA">WiFi mode STA</option>
             <option value="WIFI_AP">WiFi mode AP</option>
           </select>
 
-          <div style="margin-bottom: 5%"></div>
+          <div id="settings_mode_ap"></div>
 
-          <a
-            href="#"
-            class="button_style"
-            onclick="wi_wi_scan_esp_click()"
-            id="wi_fi_scan"
-            >Сканировать Wi-Fi</a
-          >
+          <div id="settings_mode_sta">
+            <div style="margin-bottom: 5%"></div>
 
-          <div style="margin-bottom: 5%"></div>
+            <a
+              href="#"
+              class="button_style"
+              onclick="wi_wi_scan_esp_click()"
+              id="wi_fi_scan"
+              >Сканировать Wi-Fi</a
+            >
 
-          <div>
-            <div class="settings">
-              <span class="settings__title setting-title">Точка доступа</span>
+            <div style="margin-bottom: 5%"></div>
+
+            <div>
+              <div class="settings">
+                <span class="settings__title setting-title">Точка доступа</span>
+              </div>
+              <input
+                type="text"
+                class="textbox_style"
+                id="settings_wifi_ssid"
+                placeholder="SSID"
+              />
             </div>
-            <input
-              type="text"
-              class="textbox_style"
-              id="Text_SSID"
-              placeholder="SSID"
-            />
-          </div>
 
-          <div>
-            <div class="settings">
-              <span class="settings__title setting-title">Пароль</span>
+            <div>
+              <div class="settings">
+                <span class="settings__title setting-title">Пароль</span>
+              </div>
+              <input
+                type="text"
+                class="textbox_style"
+                id="settings_wifi_pass"
+                placeholder="Password"
+              />
             </div>
-            <input
-              type="text"
-              class="textbox_style"
-              id="Text_PASS"
-              placeholder="Password"
-            />
           </div>
 
           <div>
@@ -91,20 +74,20 @@
             <input
               type="text"
               class="textbox_style"
-              id="Text_Port"
+              id="settings_port_tcp"
               placeholder=""
             />
           </div>
         </div>
 
-        <button class="accordion">Настройки серийного порта</button>
+        <button class="accordion">Serial Port</button>
         <div class="panel">
           <div class="settings">
             <span class="settings__title setting-title"
               >Конфигурация серийного порта</span
             >
           </div>
-          <select class="select-css" id="select_serial_config">
+          <select class="select-css" id="settings_mode_serial">
             <option value="SERIAL_5N1">SERIAL_5N1</option>
             <option value="SERIAL_6N1">SERIAL_6N1</option>
             <option value="SERIAL_7N1">SERIAL_7N1</option>
@@ -135,7 +118,7 @@
             <span class="settings__title setting-title">Скорость</span>
           </div>
 
-          <select class="select-css" id="select_serial_baund">
+          <select class="select-css" id="settings_serial_baund">
             <option value="600">600</option>
             <option value="1200">1200</option>
             <option value="2400">2400</option>
@@ -150,48 +133,30 @@
           </select>
         </div>
 
-        <button class="accordion">Информация</button>
+        <button class="accordion">Info</button>
+
         <div class="panel">
           <div class="settings">
-            <span class="settings__title setting-title">Информация</span>
-          </div>
-
-          <div class="text_setting" id="network_settings">
-            <div>
-              <label id="SSID">SSID</label>
-            </div>
-
-            <div>
-              <label id="PASS">PASS</label>
-            </div>
-
-            <div>
-              <label id="IP_ADDR">IP_ADDR</label>
-            </div>
-            <div>
-              <label id="MASK_ADDR">MASK_ADDR</label>
-            </div>
-            <div>
-              <label id="GATAWAY_ADDR">GATAWAY_ADDR</label>
-            </div>
-
-            <div>
-              <label id="PORT_TCP">PORT_TCP</label>
-            </div>
-          </div>
-
-          <div class="text_setting" id="serial_settings">
-            <div>
-              <label id="CLIENT_TCP">CLIENT_TCP</label>
-            </div>
-
-            <div>
-              <label id="WIFI_RSSI">WIFI_RSSI</label>
-            </div>
-
-            <div>
-              <label id="FREE_RAM">FREE_RAM</label>
-            </div>
+            <label class="text_setting" id="ui_mode_wifi">MODE WIFI</label>
+            <label class="text_setting" id="ui_ip_addr">IP ADDR</label>
+            <label class="text_setting" id="ui_mode_serial">MODE SERIAL</label>
+            <label class="text_setting" id="ui_serial_baund">SERIAL BND</label>
+            <label class="text_setting" id="ui_client_tcp">Client TCP</label>
+            <label class="text_setting" id="ui_wifi_rssi">WiFi RSSI</label>
+            <label class="text_setting" id="ui_mask_addr">MASK ADDR</label>
+            <label class="text_setting" id="ui_gataway_addr"
+              >GATAWAY ADDR</label
+            >
+            <label class="text_setting" id="ui_free_ram">FREE RAM</label>
+            <label class="text_setting" id="ui_wifi_ssid">WiFi SSID</label>
+            <label class="text_setting" id="ui_wifi_pass">WiFi PASS</label>
+            <label class="text_setting" id="ui_wifi_ap_ssid"
+              >WiFi SSID AP</label
+            >
+            <label class="text_setting" id="ui_wifi_ap_pass"
+              >WiFi PASS AP</label
+            >
+            <label class="text_setting" id="ui_port_tcp">PORT TCP</label>
           </div>
         </div>
       </div>
@@ -200,16 +165,16 @@
         href="#"
         class="button_style"
         onclick="all_save_config()"
-        id="button_reboot"
+        id="button_save_config"
         >Сохранить</a
       >
 
       <a
         href="#"
         class="button_style"
-        onclick="reboot_esp_click()"
-        id="button_reboot"
-        >Перезагрузить</a
+        onclick="button_default_reset()"
+        id="button_default_reset"
+        >Сброс конфигурации</a
       >
 
       <div style="margin-bottom: 10%"></div>
