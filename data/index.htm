@@ -27,6 +27,29 @@
             <option value="WIFI_AP">WiFi mode AP</option>
           </select>
 
+          <div>
+            <input
+              id="radio_sta"
+              name="radio"
+              type="radio"
+              value="WIFI_STA"
+              onchange="handleChange(this); "
+            />
+            <label for="radio_sta">STA</label>
+
+            <input
+              id="radio_ap"
+              name="radio"
+              type="radio"
+              value="WIFI_AP"
+              onchange="handleChange(this);"
+            />
+            <label for="radio_ap">AP</label>
+
+            <input id="option1" name="option1" type="checkbox" />
+            <label for="option1">Option One</label>
+          </div>
+
           <div id="settings_mode_ap"></div>
 
           <div id="settings_mode_sta">

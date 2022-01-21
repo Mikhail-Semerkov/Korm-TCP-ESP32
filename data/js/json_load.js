@@ -17,9 +17,9 @@ var mode_serial,
   wifi_ssid_ap,
   wifi_pass_ap,
   port_tcp,
-dhcp,
-static_ip,
-static_mask,
+  dhcp,
+  static_ip,
+  static_mask,
   static_gataway;
 
 var conf_mode_wifi;
@@ -87,9 +87,9 @@ function loadValues() {
         settings_mode_wifi = document.getElementById("settings_mode_wifi");
         settings_wifi_ssid = document.getElementById("settings_wifi_ssid");
         settings_wifi_pass = document.getElementById("settings_wifi_pass");
-        settings_port_tcp = document.getElementById("settings_port_tcp"); 
-        settings_mode_serial = document.getElementById("settings_mode_serial"); 
-        settings_serial_baund = document.getElementById("settings_serial_baund"); 
+        settings_port_tcp = document.getElementById("settings_port_tcp");
+        settings_mode_serial = document.getElementById("settings_mode_serial");
+        settings_serial_baund = document.getElementById("settings_serial_baund");
         settings_dhcp = document.getElementById("settings_dhcp");
         settings_static_ip = document.getElementById("settings_static_ip");
         settings_static_mask = document.getElementById("settings_static_mask");
@@ -107,25 +107,24 @@ function loadValues() {
 
 
 
-          conf_mode_wifi.textContent = "MODE WIFI: " + res.mode_wifi;
-          conf_ip_addr.textContent = "IP ADDR: " + res.ip_addr;
-          conf_mode_serial.textContent = "MODE SERIAL: " + res.mode_serial;
-          conf_serial_baund.textContent = "SERIAL BAUND: " + res.serial_baund;
-          conf_client_tcp.textContent = "CLIENT TCP: " + res.client_tcp;
-          conf_wifi_rssi.textContent = "WIFI RSSI: " + res.wifi_rssi;
-          conf_mask_addr.textContent = "MASK ADDR: " + res.mask_addr;
-          conf_gataway_addr.textContent = "GATAWAY ADDR: " + res.gataway_addr;
-          conf_free_ram.textContent = "FREE RAM: " + res.free_ram;
-          conf_wifi_ssid.textContent = "WIFI SSID: " + res.wifi_ssid;
-          conf_wifi_pass.textContent = "WIFI PASS: " + res.wifi_pass;
-          conf_wifi_ssid_ap.textContent = "WIFI SSID AP: " + res.wifi_ssid_ap;
-          conf_wifi_pass_ap.textContent = "WIFI PASS AP: " + res.wifi_pass_ap;
-          conf_port_tcp.textContent = "PORT TCP: " + res.port_tcp;
-        
+        conf_mode_wifi.textContent = "MODE WIFI: " + res.mode_wifi;
+        conf_ip_addr.textContent = "IP ADDR: " + res.ip_addr;
+        conf_mode_serial.textContent = "MODE SERIAL: " + res.mode_serial;
+        conf_serial_baund.textContent = "SERIAL BAUND: " + res.serial_baund;
+        conf_client_tcp.textContent = "CLIENT TCP: " + res.client_tcp;
+        conf_wifi_rssi.textContent = "WIFI RSSI: " + res.wifi_rssi;
+        conf_mask_addr.textContent = "MASK ADDR: " + res.mask_addr;
+        conf_gataway_addr.textContent = "GATAWAY ADDR: " + res.gataway_addr;
+        conf_free_ram.textContent = "FREE RAM: " + res.free_ram;
+        conf_wifi_ssid.textContent = "WIFI SSID: " + res.wifi_ssid;
+        conf_wifi_pass.textContent = "WIFI PASS: " + res.wifi_pass;
+        conf_wifi_ssid_ap.textContent = "WIFI SSID AP: " + res.wifi_ssid_ap;
+        conf_wifi_pass_ap.textContent = "WIFI PASS AP: " + res.wifi_pass_ap;
+        conf_port_tcp.textContent = "PORT TCP: " + res.port_tcp;
 
 
-        if (setting_load == false)
-        {
+
+        if (setting_load == false) {
 
           settings_mode_wifi.value = res.mode_wifi;
           settings_wifi_ssid.value = res.wifi_ssid;
@@ -144,14 +143,14 @@ function loadValues() {
 
 
 
-            if (change_mode_wifi.value == "WIFI_AP") {
-    settings_mode_sta.style = "display:none";
-    settings_mode_ap.style = "";
-  }
-       if (change_mode_wifi.value == "WIFI_STA") {
+          if (change_mode_wifi.value == "WIFI_AP") {
+            settings_mode_sta.style = "display:none";
+            settings_mode_ap.style = "";
+          }
+          if (change_mode_wifi.value == "WIFI_STA") {
             settings_mode_sta.style = "";
-           settings_mode_ap.style = "display:none";
-        }
+            settings_mode_ap.style = "display:none";
+          }
           setting_load = true;
         }
 

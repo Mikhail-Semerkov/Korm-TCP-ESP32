@@ -83,13 +83,7 @@ void Check_TCP()
       if (serverClients[i].available())
       {
         while (serverClients[i].available())
-          if (serverClients[i].readString() == "SN")
-          {
-            serverClients[i].write("00000000");
-          }
-
-        Serial1.write(serverClients[i].read());
-        Serial.write(serverClients[i].read());
+          Serial1.write(serverClients[i].read());
       }
     }
   }
