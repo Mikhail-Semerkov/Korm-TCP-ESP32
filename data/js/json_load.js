@@ -111,6 +111,19 @@ function loadValues() {
         conf_wifi_pass_ap.textContent = "WIFI PASS AP: " + res.wifi_pass_ap;
         conf_port_tcp.textContent = "PORT TCP: " + res.port_tcp;
 
+
+        var label_rssi_wifi = document.getElementById("label_rssi_wifi");
+
+         if (res.mode_wifi == "WIFI_AP") {
+           
+           label_rssi_wifi.style = "display:none";
+        }
+        if (res.mode_wifi == "WIFI_STA") {
+          label_rssi_wifi.textContent = conf_wifi_rssi.textContent;
+            label_rssi_wifi.style = "";
+      
+          }
+
         if (setting_load == false) {
 
           settings_wifi_ssid.value = res.wifi_ssid;

@@ -1,12 +1,9 @@
 #include <WiFiClient.h>
 #include <WebServer.h>
-#include <ESPmDNS.h>
 #include <SPIFFS.h>
 #include <ArduinoJson.h>
 
 WebServer web_server(80);
-
-const char *host = "esp32fs";
 
 File fsUploadFile;
 
@@ -52,6 +49,40 @@ void scanNetworks()
     Serial.println(encryptionTypeDescription);
     Serial.println("-----------------------");
   }
+}
+
+String page_content;
+void wifi_scan()
+{
+  int n = WiFi.scanComplete();
+  page_content += F("<table class=\"table\"><thead><tr><th>#</th><th>SSID</th><th>Chanel</th><th>RSSI</th></tr></thead><tbody>");
+  if (n == WIFI_SCAN_FAILED)
+    WiFi.scanNetworks(true);
+  else if (n)
+  {
+    for (int i = 0; i < n; ++i)
+    {
+      page_content += F("<tr><th scope=\"row\">");
+      page_content += String(i + 1);
+      page_content += F("</th><td><a href='javascript:selssid(\"");
+      page_content += WiFi.SSID(i);
+      page_content += F("\")' style=\"color: #ffffff\">");
+      page_content += WiFi.SSID(i);
+      page_content += F("</td><td>");
+      page_content += String(WiFi.channel(i));
+      page_content += F("</td><td>");
+      page_content += String(WiFi.RSSI(i));
+      page_content += F("</td></tr>");
+    }
+    WiFi.scanDelete();
+    if (WiFi.scanComplete() == WIFI_SCAN_FAILED)
+    {
+      WiFi.scanNetworks(true);
+    }
+  }
+  page_content += F("</tbody></table><input type=\"button\" value=\"Search\" onclick=\"page_update(");
+  page_content += current_page;
+  page_content += F(");\" class=\"btn btn-outline-primary btn-lg btn-block \"><br>");
 }
 
 String formatBytes(size_t bytes)
@@ -319,10 +350,6 @@ void setup_server_web(void)
   Serial.println(F("Print config file..."));
   printFile(filename);
 
-  MDNS.begin(host);
-  Serial.print("Open http://");
-  Serial.print(host);
-  Serial.println(".local/edit to see the file browser");
 
   web_server.on("/list", HTTP_GET, handleFileList);
   web_server.on("/edit", HTTP_GET, []()

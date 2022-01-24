@@ -11,20 +11,31 @@
       }
     </style>
 
-    <script type="text/javascript" src="js/json_load.js"></script>
     <link rel="stylesheet" href="css/style.css" />
+
+    <script type="text/javascript" src="js/json_load.js"></script>
   </head>
 
   <body onload="onBodyLoad()">
-    <div class="container">
-      <h2 class="title">Korm TCP Server</h2>
+    <div class="container unselectable">
+      <h2 class="title unselectable">Korm TCP Server</h2>
 
       <div class="result_label">
-        <label class="text_setting" id="label_mode_wifi">MODE</label>
+        <label class="text_setting unselectable" id="label_mode_wifi"
+          >MODE</label
+        >
       </div>
 
       <div class="result_label" style="font-size: medium">
-        <label class="text_setting" id="label_ip_addr">IP ADDR</label>
+        <label class="text_setting unselectable" id="label_ip_addr"
+          >IP ADDR</label
+        >
+      </div>
+
+      <div class="result_label" style="font-size: medium">
+        <label class="text_setting unselectable" id="label_rssi_wifi"
+          >WiFi RSSI</label
+        >
       </div>
 
       <div class="settings">
@@ -35,7 +46,7 @@
             <span class="settings__title setting-title">Режим Wi-Fi</span>
           </div>
 
-          <div>
+          <div class="unselectable">
             <input
               id="radio_sta"
               name="radio"
@@ -218,7 +229,7 @@
         <button class="accordion">Info</button>
 
         <div class="panel">
-          <div class="settings">
+          <div class="settings unselectable">
             <label class="text_setting" id="ui_mode_wifi">MODE WIFI</label>
             <label class="text_setting" id="ui_ip_addr">IP ADDR</label>
             <label class="text_setting" id="ui_mode_serial">MODE SERIAL</label>
@@ -261,7 +272,7 @@
 
       <div style="margin-bottom: 10%"></div>
 
-      <div class="title_podval">Korm TCP Server by M.Semerkov</div>
+      <div class="title_podval unselectable">Korm TCP Server by M.Semerkov</div>
     </div>
 
     <script type="text/javascript" src="js/accordion.js"></script>

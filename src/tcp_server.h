@@ -8,6 +8,8 @@ int Client_Connected = 0;
 
 ///////////////// PARAM SETTINGS ////////////////////
 
+const char *Hostname = "KormTCPserver";
+
 IPAddress local_IP_AP(192, 168, 1, 1);
 IPAddress gateway_AP(192, 168, 1, 254);
 IPAddress subnet_AP(255, 255, 255, 0);
@@ -100,6 +102,11 @@ void setup_tcp_server()
 
   WiFi.setAutoConnect(true);
   WiFi.setAutoReconnect(true);
+
+  if (WiFi.getHostname() != Hostname)
+  {
+    WiFi.setHostname(Hostname);
+  }
 
   if (DHCP == true)
   {
