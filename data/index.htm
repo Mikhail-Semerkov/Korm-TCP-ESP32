@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Korm TCP Server</title>
 
@@ -106,12 +107,20 @@
               <div class="settings">
                 <span class="settings__title setting-title">Пароль</span>
               </div>
-              <input
-                type="password"
-                class="textbox_style"
-                id="settings_wifi_pass"
-                placeholder="Password"
-              />
+
+              <div class="password">
+                <input
+                  type="password"
+                  class="textbox_style"
+                  id="settings_wifi_pass"
+                  placeholder="Password"
+                />
+                <a
+                  href="#"
+                  class="password-control"
+                  onclick="return show_hide_password(this);"
+                ></a>
+              </div>
             </div>
 
             <div id="dhcp_mode">
