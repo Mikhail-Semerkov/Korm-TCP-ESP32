@@ -97,8 +97,9 @@ body {
   font-family: "Montserrat";
   text-transform: uppercase;
   text-align: center;
-  margin: auto;
-  width: 45%;
+
+  width: 360px;
+  height: auto;
   padding: 10px 25px;
   background: #0a0e31;
   border-radius: 10px;
@@ -106,6 +107,7 @@ body {
     0 4px 8px rgba(99, 82, 82, 0.35), 0 8px 12px rgba(0, 0, 0, 0.15);
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.45), 0 4px 8px rgba(0, 0, 0, 0.35),
     0 8px 12px rgba(0, 0, 0, 0.15);
+  margin: auto;
 }
 
 .container h2.title {

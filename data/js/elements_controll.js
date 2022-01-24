@@ -1,5 +1,7 @@
 var request = new XMLHttpRequest();
 
+
+
 var settings_mode_wifi;
 var settings_mode_ap = document.getElementById("settings_mode_ap");
 var settings_mode_sta = document.getElementById("settings_mode_sta");
@@ -100,4 +102,11 @@ function all_save_config() {
     request.open("GET", "/reboot_esp_set", true);
     request.send();
   }
+}
+
+
+
+function home_click()
+{
+  document.location.reload();
 }
