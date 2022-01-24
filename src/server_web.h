@@ -102,6 +102,8 @@ String getContentType(String filename)
     return "application/x-zip";
   else if (filename.endsWith(".gz"))
     return "application/x-gzip";
+  else if (filename.endsWith(".ttf"))
+    return "font/ttf";
   return "text/plain";
 }
 
@@ -351,7 +353,16 @@ void setup_server_web(void)
                   json += "\"mode_wifi\":" + String("\"") + config._mode_wifi + String("\", \n");
                   json += "\"client_tcp\":" + String("\"") + String(Client_Connected) + String("\", \n");
                   json += "\"wifi_rssi\":" + String("\"") + String(WiFi.RSSI()) + String("\", \n");
-                  json += "\"ip_addr\":" + String("\"") + String(ip2Str(WiFi.localIP())) + String("\", \n");
+
+                  if (config._mode_wifi == "WIFI_STA")
+                  {
+                    json += "\"ip_addr\":" + String("\"") + String(ip2Str(WiFi.localIP())) + String("\", \n");
+                  }
+                  if (config._mode_wifi == "WIFI_AP")
+                  {
+                    json += "\"ip_addr\":" + String("\"") + String(ip2Str(local_IP_AP)) + String("\", \n");
+                  }
+
                   json += "\"mask_addr\":" + String("\"") + String(ip2Str(WiFi.subnetMask())) + String("\", \n");
                   json += "\"gataway_addr\":" + String("\"") + String(ip2Str(WiFi.gatewayIP())) + String("\", \n");
                   json += "\"free_ram\":" + String("\"") + String(ESP.getFreeHeap()) + String("\", \n");

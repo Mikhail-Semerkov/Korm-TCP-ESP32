@@ -3,16 +3,28 @@
   <head>
     <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
     <title>Korm TCP Server</title>
+
+    <style>
+      @font-face {
+        font-family: "Montserrat";
+        src: local("Montserrat"), url(/fonts/Montserrat.ttf);
+      }
+    </style>
+
     <script type="text/javascript" src="js/json_load.js"></script>
     <link rel="stylesheet" href="css/style.css" />
   </head>
 
-  <body class="backgraund" onload="onBodyLoad()">
+  <body onload="onBodyLoad()">
     <div class="container">
       <h2 class="title">Korm TCP Server</h2>
 
       <div class="result_label">
         <label class="text_setting" id="label_mode_wifi">MODE</label>
+      </div>
+
+      <div class="result_label" style="font-size: medium">
+        <label class="text_setting" id="label_ip_addr">IP ADDR</label>
       </div>
 
       <div class="settings">
@@ -22,10 +34,6 @@
           <div class="settings">
             <span class="settings__title setting-title">Режим Wi-Fi</span>
           </div>
-          <select class="select-css" id="settings_mode_wifi">
-            <option value="WIFI_STA">WiFi mode STA</option>
-            <option value="WIFI_AP">WiFi mode AP</option>
-          </select>
 
           <div>
             <input
@@ -35,7 +43,8 @@
               value="WIFI_STA"
               onchange="handleChange(this); "
             />
-            <label for="radio_sta">STA</label>
+
+            <label for="radio_sta">STA </label>
 
             <input
               id="radio_ap"
@@ -46,8 +55,13 @@
             />
             <label for="radio_ap">AP</label>
 
-            <input id="option1" name="option1" type="checkbox" />
-            <label for="option1">Option One</label>
+            <input
+              id="DHCP"
+              name="DHCP"
+              type="checkbox"
+              onchange="handleCheckBox(this);"
+            />
+            <label for="DHCP">DHCP</label>
           </div>
 
           <div id="settings_mode_ap"></div>
@@ -82,73 +96,52 @@
                 <span class="settings__title setting-title">Пароль</span>
               </div>
               <input
-                type="text"
+                type="password"
                 class="textbox_style"
                 id="settings_wifi_pass"
                 placeholder="Password"
               />
             </div>
-            <div>
-              <div class="settings">
-                <span class="settings__title setting-title">DHCP</span>
-              </div>
-              <input
-                type="text"
-                class="textbox_style"
-                id="settings_dhcp"
-                placeholder=""
-              />
-            </div>
 
-            <div>
-              <div class="settings">
-                <span class="settings__title setting-title">STATIC IP</span>
+            <div id="dhcp_mode">
+              <div>
+                <div class="settings">
+                  <span class="settings__title setting-title">STATIC IP</span>
+                </div>
+                <input
+                  type="text"
+                  class="textbox_style"
+                  id="settings_static_ip"
+                  placeholder=""
+                />
               </div>
-              <input
-                type="text"
-                class="textbox_style"
-                id="settings_static_ip"
-                placeholder=""
-              />
-            </div>
 
-            <div>
-              <div class="settings">
-                <span class="settings__title setting-title">STATIC MASK</span>
+              <div>
+                <div class="settings">
+                  <span class="settings__title setting-title">STATIC MASK</span>
+                </div>
+                <input
+                  type="text"
+                  class="textbox_style"
+                  id="settings_static_mask"
+                  placeholder=""
+                />
               </div>
-              <input
-                type="text"
-                class="textbox_style"
-                id="settings_static_mask"
-                placeholder=""
-              />
-            </div>
 
-            <div>
-              <div class="settings">
-                <span class="settings__title setting-title"
-                  >STATIC GATAWAY</span
-                >
+              <div>
+                <div class="settings">
+                  <span class="settings__title setting-title"
+                    >STATIC GATAWAY</span
+                  >
+                </div>
+                <input
+                  type="text"
+                  class="textbox_style"
+                  id="settings_static_gataway"
+                  placeholder=""
+                />
               </div>
-              <input
-                type="text"
-                class="textbox_style"
-                id="settings_static_gataway"
-                placeholder=""
-              />
             </div>
-          </div>
-
-          <div>
-            <div class="settings">
-              <span class="settings__title setting-title">Порт TCP</span>
-            </div>
-            <input
-              type="text"
-              class="textbox_style"
-              id="settings_port_tcp"
-              placeholder=""
-            />
           </div>
         </div>
 
@@ -203,6 +196,23 @@
             <option value="57600">57600</option>
             <option value="115200">115200</option>
           </select>
+        </div>
+
+        <button class="accordion">TCP Settins</button>
+        <div class="panel">
+          <div class="settings">
+            <div>
+              <div class="settings">
+                <span class="settings__title setting-title">Порт TCP</span>
+              </div>
+              <input
+                type="text"
+                class="textbox_style"
+                id="settings_port_tcp"
+                placeholder=""
+              />
+            </div>
+          </div>
         </div>
 
         <button class="accordion">Info</button>

@@ -8,6 +8,10 @@ int Client_Connected = 0;
 
 ///////////////// PARAM SETTINGS ////////////////////
 
+IPAddress local_IP_AP(192, 168, 1, 1);
+IPAddress gateway_AP(192, 168, 1, 254);
+IPAddress subnet_AP(255, 255, 255, 0);
+
 bool DHCP;
 
 int Port_TCP = 4001;
@@ -99,6 +103,7 @@ void setup_tcp_server()
 
   if (DHCP == true)
   {
+    Serial.println();
     local_IP.fromString(config._static_ip);
     gateway.fromString(config._static_gataway);
     subnet.fromString(config._static_mask);
@@ -109,6 +114,10 @@ void setup_tcp_server()
 
   if (String(config._mode_wifi) == "WIFI_STA")
   {
+
+    Serial.println();
+    Serial.println("MODE STA");
+
     WiFi.mode(WIFI_STA);
     WiFi.begin(config._wifi_ssid.c_str(), config._wifi_pass.c_str());
 
@@ -126,28 +135,34 @@ void setup_tcp_server()
       //while (1)
       delay(500);
     }
+
+    Serial.print("Ready! You are connected\n");
+    Serial.print("IP: ");
+    Serial.print(WiFi.localIP());
+    Serial.print(", Port:" + String(Port_TCP));
+    Serial.println();
+    Serial.printf("RSSI: %d dBm\n", WiFi.RSSI());
+    Serial.println();
   }
   else if (String(config._mode_wifi) == "WIFI_AP")
   {
-    IPAddress local_IP(192, 168, 1, 1);
-    IPAddress gateway(192, 168, 1, 254);
-    IPAddress subnet(255, 255, 255, 0);
+
+    Serial.println();
+    Serial.println("MODE AP");
 
     WiFi.mode(WIFI_AP);
-    WiFi.softAPConfig(local_IP, gateway, subnet);
+    WiFi.softAPConfig(local_IP_AP, gateway_AP, subnet_AP);
     WiFi.softAP(config._wifi_ssid_ap.c_str(), config._wifi_pass_ap.c_str());
+
+    Serial.print("Ready! You are connected\n");
+    Serial.print("IP: ");
+    Serial.print(local_IP_AP);
+    Serial.print(", Port:" + String(Port_TCP));
+    Serial.println();
   }
 
   server.begin();
   server.setNoDelay(true);
-
-  Serial.print("Ready! You are connected\n");
-  Serial.print("IP: ");
-  Serial.print(WiFi.localIP());
-  Serial.print(", Port:" + String(Port_TCP));
-  Serial.println();
-  Serial.printf("RSSI: %d dBm\n", WiFi.RSSI());
-  Serial.println();
 }
 
 void loop_tcp_server()

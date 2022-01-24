@@ -2,7 +2,6 @@ var reloadPeriod = 1000;
 var running = false;
 var setting_load = false;
 
-
 var mode_serial,
   serial_baund,
   mode_wifi,
@@ -37,8 +36,6 @@ var conf_wifi_ssid_ap;
 var conf_wifi_pass_ap;
 var conf_port_tcp;
 
-
-var settings_mode_wifi;
 var settings_wifi_ssid;
 var settings_wifi_pass;
 var settings_port_tcp;
@@ -50,9 +47,7 @@ var settings_static_ip;
 var settings_static_mask;
 var settings_static_gataway;
 
-
 var label_mode_wifi;
-
 
 function loadValues() {
   if (!running) return;
@@ -63,7 +58,6 @@ function loadValues() {
         var res = JSON.parse(xh.responseText);
 
         ////////////////////////////////////////////////////////////////////
-
 
         conf_mode_wifi = document.getElementById("ui_mode_wifi");
         conf_ip_addr = document.getElementById("ui_ip_addr");
@@ -80,32 +74,27 @@ function loadValues() {
         conf_wifi_pass_ap = document.getElementById("ui_wifi_ap_pass");
         conf_port_tcp = document.getElementById("ui_port_tcp");
 
-
         //////////////////////////////////////////////////////////////////
 
-
-        settings_mode_wifi = document.getElementById("settings_mode_wifi");
         settings_wifi_ssid = document.getElementById("settings_wifi_ssid");
         settings_wifi_pass = document.getElementById("settings_wifi_pass");
         settings_port_tcp = document.getElementById("settings_port_tcp");
         settings_mode_serial = document.getElementById("settings_mode_serial");
-        settings_serial_baund = document.getElementById("settings_serial_baund");
-        settings_dhcp = document.getElementById("settings_dhcp");
+        settings_serial_baund = document.getElementById(
+          "settings_serial_baund"
+        );
+        settings_dhcp = document.getElementById("DHCP");
         settings_static_ip = document.getElementById("settings_static_ip");
         settings_static_mask = document.getElementById("settings_static_mask");
-        settings_static_gataway = document.getElementById("settings_static_gataway");
-
+        settings_static_gataway = document.getElementById(
+          "settings_static_gataway"
+        );
 
         ///////////////////////////////////////////////////////////////////
 
         label_mode_wifi = document.getElementById("label_mode_wifi");
 
         ///////////////////////////////////////////////////////////////////
-
-
-
-
-
 
         conf_mode_wifi.textContent = "MODE WIFI: " + res.mode_wifi;
         conf_ip_addr.textContent = "IP ADDR: " + res.ip_addr;
@@ -122,11 +111,8 @@ function loadValues() {
         conf_wifi_pass_ap.textContent = "WIFI PASS AP: " + res.wifi_pass_ap;
         conf_port_tcp.textContent = "PORT TCP: " + res.port_tcp;
 
-
-
         if (setting_load == false) {
 
-          settings_mode_wifi.value = res.mode_wifi;
           settings_wifi_ssid.value = res.wifi_ssid;
           settings_wifi_pass.value = res.wifi_pass;
           settings_port_tcp.value = res.port_tcp;
@@ -138,22 +124,33 @@ function loadValues() {
           settings_static_gataway.value = res.static_gataway;
 
 
+          
           label_mode_wifi.textContent = res.mode_wifi + "_MODE";
+          label_ip_addr.textContent = res.ip_addr;
 
+          
 
-
-
-          if (change_mode_wifi.value == "WIFI_AP") {
+          if (res.mode_wifi == "WIFI_AP") {
+            settings_mode_wifi = "WIFI_AP";
+            radio_button_ap.checked = true;
             settings_mode_sta.style = "display:none";
             settings_mode_ap.style = "";
           }
-          if (change_mode_wifi.value == "WIFI_STA") {
+          if (res.mode_wifi == "WIFI_STA") {
+            settings_mode_wifi = "WIFI_STA";
+            radio_button_sta.checked = true;
             settings_mode_sta.style = "";
             settings_mode_ap.style = "display:none";
           }
+
+          if (settings_dhcp.value == true) {
+            dhcp_mode.style = "";
+          } else {
+            dhcp_mode.style = "display:none";
+          }
+
           setting_load = true;
         }
-
 
         if (running) setTimeout(loadValues, reloadPeriod);
       } else running = false;
@@ -173,4 +170,3 @@ function run() {
 function onBodyLoad() {
   run();
 }
-

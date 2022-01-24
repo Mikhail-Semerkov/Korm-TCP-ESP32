@@ -1,34 +1,39 @@
 var request = new XMLHttpRequest();
 
+var settings_mode_wifi;
 var settings_mode_ap = document.getElementById("settings_mode_ap");
 var settings_mode_sta = document.getElementById("settings_mode_sta");
-var change_mode_wifi = document.getElementById("settings_mode_wifi");
-
 var radio_button_sta = document.getElementById("radio_sta");
 var radio_button_ap = document.getElementById("radio_ap");
+var label_ip_addr = document.getElementById("label_ip_addr");
+
+var dhcp_mode = document.getElementById("dhcp_mode");
 
 function handleChange(src) {
   if (src.value == "WIFI_STA") {
+    settings_mode_wifi = "WIFI_STA";
     settings_mode_sta.style = "";
     settings_mode_ap.style = "display:none";
   } else {
-    settings_mode_sta.style = "";
-    settings_mode_ap.style = "display:none";
+    settings_mode_wifi = "WIFI_AP";
     settings_mode_sta.style = "display:none";
     settings_mode_ap.style = "";
   }
 }
 
-change_mode_wifi.addEventListener("change", function () {
-  if (change_mode_wifi.value == "WIFI_AP") {
-    settings_mode_sta.style = "display:none";
-    settings_mode_ap.style = "";
+function handleCheckBox(src)
+{
+  if (src.checked)
+  {
+    dhcp_mode.style = "";
+    settings_dhcp.value = 1;
   }
-  if (change_mode_wifi.value == "WIFI_STA") {
-    settings_mode_sta.style = "";
-    settings_mode_ap.style = "display:none";
+  else
+  {
+    dhcp_mode.style = "display:none";
+     settings_dhcp.value = 0;
   }
-});
+}
 
 //Reboot
 function button_default_reset() {
@@ -53,7 +58,7 @@ function all_save_config() {
     var GET_Server =
       "save_web_config_set?" +
       "mode_wifi=" +
-      settings_mode_wifi.value +
+      settings_mode_wifi +
       "&" +
       "wifi_ssid=" +
       settings_wifi_ssid.value +
