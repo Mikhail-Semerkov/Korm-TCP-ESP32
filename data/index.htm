@@ -13,6 +13,7 @@
     </style>
 
     <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/modal.css" />
 
     <script type="text/javascript" src="js/json_load.js"></script>
   </head>
@@ -82,10 +83,10 @@
             <div style="margin-bottom: 5%"></div>
 
             <a
-              href="#"
               class="button_style"
               onclick="wi_wi_scan_esp_click()"
               id="wi_fi_scan"
+              href="#modal_scan_wifi"
               >Сканировать Wi-Fi</a
             >
 
@@ -258,17 +259,16 @@
       </div>
 
       <a
-        href="#"
+        href="#modal_save"
         class="button_style"
-        onclick="all_save_config()"
+        onclick="modal_text_read()"
         id="button_save_config"
         >Сохранить</a
       >
 
       <a
-        href="#"
         class="button_style"
-        onclick="button_default_reset()"
+        href="#modal_reset_config"
         id="button_default_reset"
         >Сброс конфигурации</a
       >
@@ -276,6 +276,66 @@
       <div style="margin-bottom: 10%"></div>
 
       <div class="title_podval unselectable">Korm TCP Server by M.Semerkov</div>
+
+      <!--                                 МОДАЛЬНЫЕ ОКНА                                          -->
+
+      <div class="modal" id="modal_save" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-header">Сохранить текущие данные?</div>
+
+          <div class="modal-body">Потребуется перезагрузка!</div>
+
+          <a
+            class="btn-modal-yes"
+            aria-hidden="true"
+            onclick="all_save_config()"
+            href="#modal_reboot"
+            >Да</a
+          >
+          <a href="#close" class="btn-modal-no" aria-hidden="true">Нет</a>
+        </div>
+      </div>
+
+      <div class="modal" id="modal_reboot" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-header">Перезагрузка</div>
+          <div class="modal-body">Перезагрузить контроллер сейчас?</div>
+
+          <a
+            href="#close"
+            class="btn-modal-yes"
+            onclick="reboot_esp()"
+            href="#modal_reboot"
+            aria-hidden="true"
+            >Да</a
+          >
+          <a href="#close" class="btn-modal-no" aria-hidden="true">Нет</a>
+        </div>
+      </div>
+
+      <div class="modal" id="modal_reset_config" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-header">Сброс данных</div>
+          <div class="modal-body">Применить дефолтные настройки?</div>
+
+          <a
+            class="btn-modal-yes"
+            onclick="button_default_reset()"
+            href="#modal_reboot"
+            aria-hidden="true"
+            >Да</a
+          >
+          <a href="#close" class="btn-modal-no" aria-hidden="true">Нет</a>
+        </div>
+
+        <div class="modal" id="modal_error" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-header">Ошибка</div>
+            <div class="modal-body">Не заполнены все данные!</div>
+            <a href="#close" class="btn-modal-no" aria-hidden="true">OK</a>
+          </div>
+        </div>
+      </div>
     </div>
 
     <script type="text/javascript" src="js/accordion.js"></script>

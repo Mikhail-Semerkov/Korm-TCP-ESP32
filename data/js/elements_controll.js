@@ -1,7 +1,5 @@
 var request = new XMLHttpRequest();
 
-
-
 var settings_mode_wifi;
 var settings_mode_ap = document.getElementById("settings_mode_ap");
 var settings_mode_sta = document.getElementById("settings_mode_sta");
@@ -23,28 +21,21 @@ function handleChange(src) {
   }
 }
 
-function handleCheckBox(src)
-{
-  if (src.checked)
-  {
+function handleCheckBox(src) {
+  if (src.checked) {
     dhcp_mode.style = "";
     settings_dhcp.value = 1;
-  }
-  else
-  {
+  } else {
     dhcp_mode.style = "display:none";
-     settings_dhcp.value = 0;
+    settings_dhcp.value = 0;
   }
 }
 
 //Reboot
 function button_default_reset() {
-  var isAdmin = confirm("Сбросить все настройки?");
-  if (isAdmin == true) {
-    console.log("Default Setting");
-    request.open("GET", "/default_settings_esp_set", true);
-    request.send();
-  }
+  console.log("Default Setting");
+  request.open("GET", "/default_settings_esp_set", true);
+  request.send();
 }
 
 //Scan WiFi
@@ -55,72 +46,74 @@ function wi_wi_scan_esp_click() {
 }
 
 function all_save_config() {
-  var Save = confirm("Сохранить текущие натройки?");
-  if (Save == true) {
-    var GET_Server =
-      "save_web_config_set?" +
-      "mode_wifi=" +
-      settings_mode_wifi +
-      "&" +
-      "wifi_ssid=" +
-      settings_wifi_ssid.value +
-      "&" +
-      "wifi_pass=" +
-      settings_wifi_pass.value +
-      "&" +
-      "port_tcp=" +
-      settings_port_tcp.value +
-      "&" +
-      "mode_serial=" +
-      settings_mode_serial.value +
-      "&" +
-      "serial_baund=" +
-      settings_serial_baund.value +
-      "&" +
-      "dhcp=" +
-      settings_dhcp.value +
-      "&" +
-      "static_ip=" +
-      settings_static_ip.value +
-      "&" +
-      "static_mask=" +
-      settings_static_mask.value +
-      "&" +
-      "static_gataway=" +
-      settings_static_gataway.value;
+  var GET_Server =
+    "save_web_config_set?" +
+    "mode_wifi=" +
+    settings_mode_wifi +
+    "&" +
+    "wifi_ssid=" +
+    settings_wifi_ssid.value +
+    "&" +
+    "wifi_pass=" +
+    settings_wifi_pass.value +
+    "&" +
+    "port_tcp=" +
+    settings_port_tcp.value +
+    "&" +
+    "mode_serial=" +
+    settings_mode_serial.value +
+    "&" +
+    "serial_baund=" +
+    settings_serial_baund.value +
+    "&" +
+    "dhcp=" +
+    settings_dhcp.value +
+    "&" +
+    "static_ip=" +
+    settings_static_ip.value +
+    "&" +
+    "static_mask=" +
+    settings_static_mask.value +
+    "&" +
+    "static_gataway=" +
+    settings_static_gataway.value;
 
-    request.open("GET", GET_Server, true);
-    request.send();
+  request.open("GET", GET_Server, true);
+  request.send();
+}
 
-    alert("Настройки сохранены!");
+function reboot_esp() {
+  console.log("Reboot ESP32");
+  request.open("GET", "/reboot_esp_set", true);
+  request.send();
 
-    var Reboot = confirm("Требуется перезагрузка! Перезагрузить сейчас?");
+  if ((settings_static_ip.value != "") & (settings_dhcp.value == 1)) {
+
+        let delay = 7000;
+
+    let timerId = setTimeout(function request() {
+      setTimeout(() => {
+        document.location.href = "http://" + settings_static_ip.value;
+      }, 5000);
+
+      timerId = setTimeout(request, delay);
+    }, delay);
+    
   }
 
-  if (Reboot == true) {
-    console.log("Reboot ESP32");
-    request.open("GET", "/reboot_esp_set", true);
-    request.send();
+  if (settings_mode_wifi == "WIFI_AP") {
+    let delay = 7000;
+
+    let timerId = setTimeout(function request() {
+      setTimeout(() => {
+        document.location.href = "http://192.168.1.1";
+      }, 5000);
+
+      timerId = setTimeout(request, delay);
+    }, delay);
   }
 }
 
-
-
-function home_click()
-{
+function home_click() {
   document.location.reload();
-}
-
-
-
-function show_hide_password(target){
-	var input = document.getElementById('settings_wifi_pass');
-	if (input.getAttribute('type') == 'password') {
-		target.classList.add('view');
-		input.setAttribute('type', 'text');
-	} else {
-		target.classList.remove('view');
-		input.setAttribute('type', 'password');
-	}
-	return false;
 }

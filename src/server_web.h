@@ -51,8 +51,6 @@ void scanNetworks()
   }
 }
 
-
-
 String formatBytes(size_t bytes)
 {
   if (bytes < 1024)
@@ -299,9 +297,6 @@ void save_web_config()
   saveConfiguration(filename, config);
 
   Serial.println(Data);
-
-  // Serial.println(F("Loading configuration..."));
-  // loadConfiguration(filename, config);
 }
 
 void default_settings_esp()
@@ -317,7 +312,6 @@ void setup_server_web(void)
 
   Serial.println(F("Print config file..."));
   printFile(filename);
-
 
   web_server.on("/list", HTTP_GET, handleFileList);
   web_server.on("/edit", HTTP_GET, []()

@@ -112,6 +112,8 @@ function loadValues() {
         conf_port_tcp.textContent = "PORT TCP: " + res.port_tcp;
 
 
+
+
         var label_rssi_wifi = document.getElementById("label_rssi_wifi");
 
          if (res.mode_wifi == "WIFI_AP") {
@@ -141,7 +143,7 @@ function loadValues() {
           label_mode_wifi.textContent = res.mode_wifi + "_MODE";
           label_ip_addr.textContent = res.ip_addr;
 
-          
+
 
           if (res.mode_wifi == "WIFI_AP") {
             settings_mode_wifi = "WIFI_AP";
@@ -172,6 +174,7 @@ function loadValues() {
   xh.open("GET", "/json", true);
   xh.send(null);
 }
+
 
 function run() {
   if (!running) {
