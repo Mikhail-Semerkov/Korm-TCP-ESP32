@@ -15,18 +15,19 @@ IPAddress gateway_AP(192, 168, 1, 254);
 IPAddress subnet_AP(255, 255, 255, 0);
 
 bool DHCP;
-
-int Port_TCP = 4001;
+int Port = 4001;
 
 IPAddress local_IP, gateway, subnet, primaryDNS, secondaryDNS;
 
 ///////////////////////////////////////////////////
 
-WiFiServer server(Port_TCP);
+WiFiServer server(Port);
 WiFiClient serverClients[MAX_SRV_CLIENTS];
 
 void Check_UART()
 {
+
+  
 
   uint8_t i;
 
@@ -139,14 +140,14 @@ void setup_tcp_server()
     {
       Serial.print("Could not connect to");
       Serial.println(config._wifi_ssid);
-      //while (1)
+      // while (1)
       delay(500);
     }
 
     Serial.print("Ready! You are connected\n");
     Serial.print("IP: ");
     Serial.print(WiFi.localIP());
-    Serial.print(", Port:" + String(Port_TCP));
+    Serial.print(", Port:" + String(config._port_tcp.toInt()));
     Serial.println();
     Serial.printf("RSSI: %d dBm\n", WiFi.RSSI());
     Serial.println();
@@ -164,7 +165,7 @@ void setup_tcp_server()
     Serial.print("Ready! You are connected\n");
     Serial.print("IP: ");
     Serial.print(local_IP_AP);
-    Serial.print(", Port:" + String(Port_TCP));
+    Serial.print(", Port:" + String(config._port_tcp.toInt()));
     Serial.println();
   }
 

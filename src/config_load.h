@@ -31,7 +31,7 @@ void loadConfiguration(const char *filename, Config &config)
   config._wifi_pass = root["wifi_pass"] | "";
   config._wifi_ssid_ap = root["wifi_ssid_ap"] | "Korm TCP Server";
   config._wifi_pass_ap = root["wifi_pass_ap"] | "12345678";
-  config._port_tcp = root["wifi_port_tcp"] | "4001";
+  config._port_tcp = root["port_tcp"] | "4001";
   config._dhcp = root["dhcp"] | "0";
   config._static_ip = root["static_ip"] | "10.200.1.30";
   config._static_mask = root["static_mask"] | "255.255.252.0";
