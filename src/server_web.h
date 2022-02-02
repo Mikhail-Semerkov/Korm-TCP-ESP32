@@ -140,7 +140,7 @@ void handleFileUpload()
   }
   else if (upload.status == UPLOAD_FILE_WRITE)
   {
-    //Serial.print("handleFileUpload Data: "); Serial.println(upload.currentSize);
+    // Serial.print("handleFileUpload Data: "); Serial.println(upload.currentSize);
     if (fsUploadFile)
       fsUploadFile.write(upload.buf, upload.currentSize);
   }
@@ -310,8 +310,6 @@ void default_settings_esp()
 void setup_server_web(void)
 {
 
-  
-
   Serial.println(F("Print config file..."));
   printFile(filename);
 
@@ -319,8 +317,7 @@ void setup_server_web(void)
   web_server.on("/edit", HTTP_GET, []()
                 {
                   if (!handleFileRead("/edit.htm"))
-                    web_server.send(404, "text/plain", "FileNotFound");
-                });
+                    web_server.send(404, "text/plain", "FileNotFound"); });
   web_server.on("/edit", HTTP_PUT, handleFileCreate);
   web_server.on("/edit", HTTP_DELETE, handleFileDelete);
   web_server.on(
@@ -331,8 +328,7 @@ void setup_server_web(void)
   web_server.onNotFound([]()
                         {
                           if (!handleFileRead(web_server.uri()))
-                            web_server.send(404, "text/plain", "FileNotFound");
-                        });
+                            web_server.send(404, "text/plain", "FileNotFound"); });
 
   web_server.on("/json", HTTP_GET, []()
                 {
@@ -371,8 +367,20 @@ void setup_server_web(void)
                   json += "\n}";
 
                   web_server.send(200, "text/json", json);
-                  json = String();
-                });
+                  json = String(); });
+
+  web_server.on("/ds", HTTP_GET, []()
+                {
+                  String
+                      json = "{\n";
+
+                  json += "\"weight\":" + String("\"") + Data_DS + String("\"");
+
+
+                  json += "\n}";
+
+                  web_server.send(200, "text/json", json);
+                  json = String(); });
 
   web_server.on("/reboot_esp_set", button_reboot_click);
   web_server.on("/wi_wi_scan_esp_set", wi_wi_scan_click);

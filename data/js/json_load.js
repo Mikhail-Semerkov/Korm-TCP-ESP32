@@ -168,7 +168,8 @@ function loadValues() {
         }
 
         if (running) setTimeout(loadValues, reloadPeriod);
-      } else running = false;
+      }
+      else running = false;
     }
   };
   xh.open("GET", "/json", true);
@@ -186,3 +187,68 @@ function run() {
 function onBodyLoad() {
   run();
 }
+
+
+
+setInterval(function() 
+{
+  getData();
+}, 100); 
+
+
+var weight;
+var Weight_Data;
+
+function getData() {
+  if (!running) return;
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      var res = JSON.parse(xhttp.responseText);
+
+      Weight_Data = res.weight;
+
+      
+      
+
+      
+
+       //if (running) setTimeout(loadValues, reloadPeriod);
+    }
+    //else running = false;
+  };
+  xhttp.open("GET", "/ds", true);
+  xhttp.send(null);
+}
+
+
+
+var display = new SegmentDisplay("display");
+  
+  display.pattern         = "######";
+  display.displayAngle    = 0;
+  display.digitHeight     = 50;
+  display.digitWidth      = 33.5;
+  display.digitDistance   = 6.8;
+  display.segmentWidth    = 5;
+  display.segmentDistance = 1.1;
+  display.segmentCount    = 14;
+  display.cornerType      = 0;
+      display.colorOn = "#f5f5f5";
+      display.colorOff = "#3b3b3b";
+      display.draw();
+
+  
+      animate();
+
+      function animate() {
+        var value = Weight_Data;
+
+        display.setValue(value);
+        window.setTimeout("animate()", 100);
+      }
+
+
+
+  
+
