@@ -4,23 +4,21 @@
 #include <tcp_server.h>
 #include <server_web.h>
 
-uint32_t myTimer1;
-
 void setup()
 {
   loadConfiguration(filename, config);
 
   Serial.begin(config._serial_baund.toInt());
-  Serial1.begin(config._serial_baund.toInt(), uint32_t(config._mode_serial.c_str()));
+  Serial1.begin(config._serial_baund.toInt());
+  Serial2.begin(config._serial_baund.toInt());
+
+  // Serial1.begin(config._serial_baund.toInt(), uint32_t(config._mode_serial.c_str()));
 
   setup_tcp_server();
-
   setup_server_web();
-
-  Serial2.begin(9600);
 }
 
-void Check_UART2()
+void check_dublore()
 {
   if (Serial2.available() > 0)
   {
@@ -28,6 +26,11 @@ void Check_UART2()
 
     Data_DS.replace("\r", "");
     Data_DS.replace("\n", "");
+  }
+
+  if (millis() - Timer_Data_DS >= 100)
+  {
+    Timer_Data_DS = millis();
   }
 }
 
@@ -40,11 +43,5 @@ void loop()
 
   loop_server_web();
 
-  Check_UART2();
-
-  if (millis() - myTimer1 >= 100)
-  {
-    myTimer1 = millis();
-    Serial.print(Data_DS);
-  }
+  check_dublore();
 }

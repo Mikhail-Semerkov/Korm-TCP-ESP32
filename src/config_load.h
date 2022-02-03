@@ -1,15 +1,3 @@
-#include <Arduino.h>
-#include <SPIFFS.h>
-#include <ArduinoJson.h>
-
-struct Config
-{
-  String _mode_serial, _serial_baund, _mode_wifi, _client_tcp, _wifi_rssi, _ip_addr, _mask_addr, _gataway_addr, _free_ram, _wifi_ssid, _wifi_pass, _wifi_ssid_ap, _wifi_pass_ap, _port_tcp, _dhcp, _static_ip, _static_mask, _static_gataway;
-};
-
-const char *filename = "/config.json";
-Config config;
-
 void loadConfiguration(const char *filename, Config &config)
 {
   while (!SPIFFS.begin())

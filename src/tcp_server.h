@@ -1,33 +1,5 @@
-////////////////// GLOBAL SETTINGS //////////////////
-
-#include <WiFi.h>
-
-#define MAX_SRV_CLIENTS 4
-
-int Client_Connected = 0;
-
-///////////////// PARAM SETTINGS ////////////////////
-
-const char *Hostname = "KormTCPserver";
-
-IPAddress local_IP_AP(192, 168, 1, 1);
-IPAddress gateway_AP(192, 168, 1, 254);
-IPAddress subnet_AP(255, 255, 255, 0);
-
-bool DHCP;
-int Port = 4001;
-
-IPAddress local_IP, gateway, subnet, primaryDNS, secondaryDNS;
-
-///////////////////////////////////////////////////
-
-WiFiServer server(Port);
-WiFiClient serverClients[MAX_SRV_CLIENTS];
-
-void Check_UART()
+void check_uart()
 {
-
-  
 
   uint8_t i;
 
@@ -42,13 +14,14 @@ void Check_UART()
       if (serverClients[i] && serverClients[i].connected())
       {
         serverClients[i].write(sbuf, len);
+
         delay(1);
       }
     }
   }
 }
 
-void Check_Clients()
+void check_tcp_client()
 {
   uint8_t i;
 
@@ -79,7 +52,7 @@ void Check_Clients()
   }
 }
 
-void Check_TCP()
+void check_tcp_data()
 {
   uint8_t i;
 
@@ -175,8 +148,7 @@ void setup_tcp_server()
 
 void loop_tcp_server()
 {
-
-  Check_Clients();
-  Check_TCP();
-  Check_UART();
+  check_tcp_client();
+  check_tcp_data();
+  check_uart();
 }

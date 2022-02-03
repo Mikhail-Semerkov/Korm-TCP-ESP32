@@ -1,12 +1,3 @@
-#include <WiFiClient.h>
-#include <WebServer.h>
-#include <SPIFFS.h>
-#include <ArduinoJson.h>
-
-WebServer web_server(80);
-
-File fsUploadFile;
-
 String translateEncryptionType(wifi_auth_mode_t encryptionType)
 {
   switch (encryptionType)
