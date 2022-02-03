@@ -7,6 +7,7 @@
 #include <SPIFFS.h>
 #include <ArduinoJson.h>
 #include <WiFi.h>
+#include <Update.h>
 
 /////////////////              Load Config                 /////////////////
 
@@ -28,6 +29,10 @@ WebServer web_server(80);
 File fsUploadFile;
 
 /////////////////              TCP Server                  /////////////////
+
+char ESC = '';
+char EOT = '';
+char SUB = '';
 
 #define MAX_SRV_CLIENTS 4
 

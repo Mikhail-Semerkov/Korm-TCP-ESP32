@@ -290,6 +290,15 @@ void save_web_config()
   Serial.println(Data);
 }
 
+void button_click_web_config()
+{
+
+  String Buffer = web_server.arg("name_click");
+  web_server.send(200, "text/plane", "OK");
+  Serial.println(Buffer);
+  write_command_digistar(Buffer);
+}
+
 void default_settings_esp()
 {
   Serial.println("Reset ESP32");
@@ -377,6 +386,8 @@ void setup_server_web(void)
   web_server.on("/wi_wi_scan_esp_set", wi_wi_scan_click);
   web_server.on("/save_web_config_set", save_web_config);
   web_server.on("/default_settings_esp_set", default_settings_esp);
+
+  web_server.on("/click_terminal", button_click_web_config);
 
   web_server.begin();
 

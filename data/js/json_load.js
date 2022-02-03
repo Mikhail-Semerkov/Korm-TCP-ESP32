@@ -173,7 +173,7 @@ function loadValues() {
     }
   };
   xh.open("GET", "/json", true);
-  xh.send(null);
+  xh.send();
 }
 
 
@@ -207,36 +207,45 @@ function getData() {
       var res = JSON.parse(xhttp.responseText);
 
       Weight_Data = res.weight;
-
-      
-      
-
-      
-
-       //if (running) setTimeout(loadValues, reloadPeriod);
+      //if (running) setTimeout(getData, reloadPeriod);
     }
     //else running = false;
   };
   xhttp.open("GET", "/ds", true);
-  xhttp.send(null);
+  xhttp.send();
 }
 
 
 
 var display = new SegmentDisplay("display");
+var display_terminal = new SegmentDisplay("display_terminal");
   
   display.pattern         = "######";
   display.displayAngle    = 0;
   display.digitHeight     = 50;
-  display.digitWidth      = 33.5;
-  display.digitDistance   = 6.8;
-  display.segmentWidth    = 5;
+  display.digitWidth      = 28;
+  display.digitDistance   = 6.4;
+  display.segmentWidth    = 4.5;
   display.segmentDistance = 1.1;
   display.segmentCount    = 14;
   display.cornerType      = 0;
-      display.colorOn = "#f5f5f5";
-      display.colorOff = "#3b3b3b";
-      display.draw();
+  display.colorOn = "#EFEFEF";
+  display.colorOff = "#232746";
+  display.draw();
+      
+
+  display_terminal.pattern         = "######";
+  display_terminal.displayAngle    = 0;
+  display_terminal.digitHeight     = 50;
+  display_terminal.digitWidth      = 28;
+  display_terminal.digitDistance   = 6.4;
+  display_terminal.segmentWidth    = 4.5;
+  display_terminal.segmentDistance = 1.1;
+  display_terminal.segmentCount    = 14;
+  display_terminal.cornerType      = 0;
+  display_terminal.colorOn         = "#090909";
+  display_terminal.colorOff        = "#c8defa";
+  display_terminal.draw();
 
   
       animate();
@@ -245,6 +254,7 @@ var display = new SegmentDisplay("display");
         var value = Weight_Data;
 
         display.setValue(value);
+        display_terminal.setValue(value);
         window.setTimeout("animate()", 100);
       }
 

@@ -3,8 +3,11 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Korm TCP Server</title>
 
+    <script type="text/javascript" src="js/segment-display.js"></script>
+    <script type="text/javascript" src="js/json_load.js"></script>
+
+    <title>Korm TCP Server</title>
     <style>
       @font-face {
         font-family: "Montserrat";
@@ -14,16 +17,20 @@
 
     <link rel="stylesheet" href="css/style.css" />
     <link rel="stylesheet" href="css/modal.css" />
-
-    <script type="text/javascript" src="js/segment-display.js"></script>
-    <script type="text/javascript" src="js/json_load.js"></script>
   </head>
 
   <body onload="onBodyLoad()">
     <div class="container unselectable">
       <h2 class="title unselectable" onclick="home_click()">Korm TCP Server</h2>
 
-      <canvas id="display" width="310" height="150"></canvas>
+      <span class="settings__title setting-title">DUBLORE DIGI-STAR</span>
+      <div style="margin-bottom: 1%"></div>
+
+      <div class="border_dublore">
+        <canvas id="display" width="250" height="80"></canvas>
+      </div>
+
+      <div style="margin-bottom: 5%"></div>
 
       <div class="result_label">
         <label class="text_setting unselectable" id="label_mode_wifi"
