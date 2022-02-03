@@ -1,0 +1,440 @@
+.button_terminal_zero {
+  cursor: pointer;
+  color: #00e0d0;
+  background: rgba(0, 0, 0, 0);
+  border-color: white;
+  position: absolute;
+  height: 41px;
+  width: 46px;
+  left: 233px;
+  right: 10px;
+  top: -95px;
+  border-radius: 6px;
+}
+
+.button_terminal_hold {
+  cursor: pointer;
+  color: #00e0d0;
+  background: rgba(0, 0, 0, 0);
+  border-color: white;
+  position: absolute;
+  height: 41px;
+  width: 46px;
+  left: 338px;
+  right: 10px;
+  top: -95px;
+  border-radius: 6px;
+}
+
+.button_terminal_hold {
+  cursor: pointer;
+  color: #00e0d0;
+  background: rgba(0, 0, 0, 0);
+  border-color: white;
+  position: absolute;
+  height: 41px;
+  width: 46px;
+  left: 338px;
+  right: 10px;
+  top: -95px;
+  border-radius: 6px;
+}
+
+.button_terminal_timer {
+  cursor: pointer;
+  color: #00e0d0;
+  background: rgba(0, 0, 0, 0);
+  border-color: white;
+  position: absolute;
+  height: 41px;
+  width: 46px;
+  left: 397px;
+  right: 10px;
+  top: -95px;
+  border-radius: 6px;
+}
+
+.button_terminal_on {
+  cursor: pointer;
+  color: #00e0d0;
+  background: rgba(0, 0, 0, 0);
+  border-color: white;
+  position: absolute;
+  height: 41px;
+  width: 46px;
+  left: 509px;
+  right: 10px;
+  top: -95px;
+  border-radius: 6px;
+}
+
+.button_terminal_tare {
+  cursor: pointer;
+  color: #00e0d0;
+  background: rgba(0, 0, 0, 0);
+  border-color: white;
+  position: absolute;
+  height: 41px;
+  width: 46px;
+  left: 566px;
+  right: 10px;
+  top: -23px;
+  border-radius: 6px;
+}
+
+.button_terminal_print {
+  cursor: pointer;
+  color: #00e0d0;
+  background: rgba(0, 0, 0, 0);
+  border-color: white;
+  position: absolute;
+  height: 41px;
+  width: 46px;
+  left: 566px;
+  right: 10px;
+  top: 30px;
+  border-radius: 6px;
+}
+
+.button_terminal_netgross {
+  cursor: pointer;
+  color: #00e0d0;
+  background: rgba(0, 0, 0, 0);
+  border-color: white;
+  position: absolute;
+  height: 41px;
+  width: 46px;
+  left: 566px;
+  right: 10px;
+  top: 84px;
+  border-radius: 6px;
+}
+
+.button_terminal_function {
+  cursor: pointer;
+  color: #00e0d0;
+  background: rgba(0, 0, 0, 0);
+  border-color: white;
+  position: absolute;
+  height: 41px;
+  width: 46px;
+  left: 565px;
+  right: 10px;
+  top: 152px;
+  border-radius: 6px;
+}
+
+.button_terminal_select {
+  cursor: pointer;
+  color: #00e0d0;
+  background: rgba(0, 0, 0, 0);
+  border-color: white;
+  position: absolute;
+  height: 41px;
+  width: 46px;
+  left: 565px;
+  right: 10px;
+  top: 200px;
+  border-radius: 6px;
+}
+
+.button_terminal_help {
+  cursor: pointer;
+  color: #00e0d0;
+  background: rgba(0, 0, 0, 0);
+  border-color: white;
+  position: absolute;
+  height: 41px;
+  width: 46px;
+  left: 565px;
+  right: 10px;
+  top: 248px;
+  border-radius: 6px;
+}
+
+.button_terminal_1 {
+  cursor: pointer;
+  color: #00e0d0;
+  background: rgba(0, 0, 0, 0);
+  border-color: white;
+  position: absolute;
+  height: 30px;
+  width: 36px;
+  left: 401px;
+  right: 10px;
+  top: 153px;
+  border-radius: 6px;
+}
+
+.button_terminal_2 {
+  cursor: pointer;
+  color: #00e0d0;
+  background: rgba(0, 0, 0, 0);
+  border-color: white;
+  position: absolute;
+  height: 30px;
+  width: 36px;
+  left: 450px;
+  right: 10px;
+  top: 153px;
+  border-radius: 6px;
+}
+
+.button_terminal_3 {
+  cursor: pointer;
+  color: #00e0d0;
+  background: rgba(0, 0, 0, 0);
+  border-color: white;
+  position: absolute;
+  height: 30px;
+  width: 36px;
+  left: 500px;
+  right: 10px;
+  top: 153px;
+  border-radius: 6px;
+}
+
+.button_terminal_4 {
+  cursor: pointer;
+  color: #00e0d0;
+  background: rgba(0, 0, 0, 0);
+  border-color: white;
+  position: absolute;
+  height: 30px;
+  width: 36px;
+  left: 401px;
+  right: 10px;
+  top: 187px;
+  border-radius: 6px;
+}
+
+.button_terminal_5 {
+  cursor: pointer;
+  color: #00e0d0;
+  background: rgba(0, 0, 0, 0);
+  border-color: white;
+  position: absolute;
+  height: 30px;
+  width: 36px;
+  left: 450px;
+  right: 10px;
+  top: 187px;
+  border-radius: 6px;
+}
+
+.button_terminal_6 {
+  cursor: pointer;
+  color: #00e0d0;
+  background: rgba(0, 0, 0, 0);
+  border-color: white;
+  position: absolute;
+  height: 30px;
+  width: 36px;
+  left: 500px;
+  right: 10px;
+  top: 187px;
+  border-radius: 6px;
+}
+
+.button_terminal_7 {
+  cursor: pointer;
+  color: #00e0d0;
+  background: rgba(0, 0, 0, 0);
+  border-color: white;
+  position: absolute;
+  height: 30px;
+  width: 36px;
+  left: 401px;
+  right: 10px;
+  top: 222px;
+  border-radius: 6px;
+}
+
+.button_terminal_8 {
+  cursor: pointer;
+  color: #00e0d0;
+  background: rgba(0, 0, 0, 0);
+  border-color: white;
+  position: absolute;
+  height: 30px;
+  width: 36px;
+  left: 451px;
+  right: 10px;
+  top: 222px;
+  border-radius: 6px;
+}
+
+.button_terminal_9 {
+  cursor: pointer;
+  color: #00e0d0;
+  background: rgba(0, 0, 0, 0);
+  border-color: white;
+  position: absolute;
+  height: 30px;
+  width: 36px;
+  left: 500px;
+  right: 10px;
+  top: 222px;
+  border-radius: 6px;
+}
+
+.button_terminal_clear {
+  cursor: pointer;
+  color: #00e0d0;
+  background: rgba(0, 0, 0, 0);
+  border-color: white;
+  position: absolute;
+  height: 30px;
+  width: 36px;
+  left: 500px;
+  right: 10px;
+  top: 256px;
+  border-radius: 6px;
+}
+
+.button_terminal_0 {
+  cursor: pointer;
+  color: #00e0d0;
+  background: rgba(0, 0, 0, 0);
+  border-color: white;
+  position: absolute;
+  height: 30px;
+  width: 36px;
+  left: 450px;
+  right: 10px;
+  top: 256px;
+  border-radius: 6px;
+}
+
+.button_terminal_id {
+  cursor: pointer;
+  color: #00e0d0;
+  background: rgba(0, 0, 0, 0);
+  border-color: white;
+  position: absolute;
+  height: 30px;
+  width: 36px;
+  left: 401px;
+  right: 10px;
+  top: 256px;
+  border-radius: 6px;
+}
+
+.button_terminal_cursor_top {
+  cursor: pointer;
+  color: #00e0d0;
+  background: rgba(0, 0, 0, 0);
+  border-color: white;
+  position: absolute;
+
+  border: 18px solid transparent;
+  border-bottom: 30px solid transparent;
+  outline: none;
+
+  height: 30px;
+  width: 36px;
+  left: 278px;
+  right: 10px;
+  top: 140px;
+  border-radius: 6px;
+}
+
+.button_terminal_cursor_bottom {
+  cursor: pointer;
+  color: #00e0d0;
+  background: rgba(0, 0, 0, 0);
+  border-color: white;
+  position: absolute;
+
+  border: 18px solid transparent;
+  border-top: 30px solid transparent;
+  outline: none;
+
+  height: 30px;
+  width: 36px;
+  left: 278px;
+  right: 10px;
+  top: 243px;
+  border-radius: 6px;
+}
+
+.button_terminal_cursor_right {
+  cursor: pointer;
+  color: #00e0d0;
+  background: rgba(0, 0, 0, 0);
+  border-color: white;
+  position: absolute;
+
+  border: 18px solid transparent;
+  border-right: 30px solid transparent;
+  outline: none;
+
+  height: 30px;
+  width: 36px;
+  left: 220px;
+  right: 10px;
+  top: 196px;
+  border-radius: 6px;
+}
+
+.button_terminal_cursor_left {
+  cursor: pointer;
+  color: #00e0d0;
+  background: rgba(0, 0, 0, 0);
+  border-color: white;
+  position: absolute;
+
+  border: 18px solid transparent;
+  border-left: 30px solid transparent;
+  outline: none;
+
+  height: 30px;
+  width: 36px;
+  left: 322px;
+  right: 10px;
+  top: 196px;
+  border-radius: 6px;
+}
+
+.button_terminal_cursor_enter {
+  cursor: pointer;
+  color: #00e0d0;
+  background: rgba(0, 0, 0, 0);
+  border-color: white;
+  position: absolute;
+  outline: none;
+  height: 52px;
+  width: 52px;
+  left: 270px;
+  right: 10px;
+  top: 189px;
+  border-radius: 50%;
+}
+
+.button_terminal_recipe {
+  cursor: pointer;
+  color: #00e0d0;
+  background: rgba(0, 0, 0, 0);
+  border-color: white;
+  position: absolute;
+  height: 42px;
+  width: 43px;
+  left: 27px;
+  right: 10px;
+  top: 162px;
+  border-radius: 6px;
+}
+
+.button_terminal_pens {
+  cursor: pointer;
+  color: #00e0d0;
+  background: rgba(0, 0, 0, 0);
+  border-color: white;
+  position: absolute;
+  height: 42px;
+  width: 43px;
+  left: 27px;
+  right: 10px;
+  top: 216px;
+  border-radius: 6px;
+}

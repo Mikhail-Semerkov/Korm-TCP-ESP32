@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="stylesheet" href="css/button_terminal.css" />
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/modal.css" />
+
+    <script type="text/javascript" src="js/segment-display.js"></script>
+    <script type="text/javascript" src="js/json_load.js"></script>
+
+    <title>Korm TCP Server</title>
+    <style>
+      @font-face {
+        font-family: "Montserrat";
+        src: local("Montserrat"), url(/fonts/Montserrat.ttf);
+      }
+    </style>
+  </head>
+
+  <body onload="onBodyLoad()">
+    <div class="container_digistar unselectable">
+      <h2 class="title unselectable" onclick="home_click()">
+        Terminal Digi-Star
+      </h2>
+
+      <div class="settings">
+        <div class="imgblock2">
+          <img src="/data/image/terminal.jpg" />
+
+          <h2>
+            <canvas id="display_terminal" width="420" height="100"></canvas>
+
+            <div>
+              <button
+                class="button_terminal_zero"
+                onclick="click_terminal('4300')"
+              ></button>
+
+              <button
+                class="button_terminal_hold"
+                onclick="click_terminal('2000')"
+              ></button>
+
+              <button
+                class="button_terminal_timer"
+                onclick="click_terminal('4700')"
+              ></button>
+
+              <button
+                class="button_terminal_on"
+                onclick="click_terminal('0800')"
+              ></button>
+
+              <button
+                class="button_terminal_tare"
+                onclick="click_terminal('4000')"
+              ></button>
+
+              <button
+                class="button_terminal_print"
+                onclick="click_terminal('2300')"
+              ></button>
+
+              <button
+                class="button_terminal_netgross"
+                onclick="click_terminal('1000')"
+              ></button>
+
+              <button
+                class="button_terminal_function"
+                onclick="click_terminal('3700')"
+              ></button>
+
+              <button
+                class="button_terminal_select"
+                onclick="click_terminal('2700')"
+              ></button>
+
+              <button
+                class="button_terminal_help"
+                onclick="click_terminal('1300')"
+              ></button>
+
+              <button
+                class="button_terminal_1"
+                onclick="click_terminal('3400')"
+              ></button>
+
+              <button
+                class="button_terminal_2"
+                onclick="click_terminal('4500')"
+              ></button>
+
+              <button
+                class="button_terminal_3"
+                onclick="click_terminal('3500')"
+              ></button>
+
+              <button
+                class="button_terminal_4"
+                onclick="click_terminal('2500')"
+              ></button>
+
+              <button
+                class="button_terminal_5"
+                onclick="click_terminal('1500')"
+              ></button>
+
+              <button
+                class="button_terminal_6"
+                onclick="click_terminal('1400')"
+              ></button>
+
+              <button
+                class="button_terminal_7"
+                onclick="click_terminal('4600')"
+              ></button>
+
+              <button
+                class="button_terminal_8"
+                onclick="click_terminal('3600')"
+              ></button>
+
+              <button
+                class="button_terminal_9"
+                onclick="click_terminal('2600')"
+              ></button>
+
+              <button
+                class="button_terminal_clear"
+                onclick="click_terminal('1700')"
+              ></button>
+
+              <button
+                class="button_terminal_0"
+                onclick="click_terminal('1600')"
+              ></button>
+
+              <button
+                class="button_terminal_id"
+                onclick="click_terminal('1200')"
+              ></button>
+
+              <button
+                class="button_terminal_cursor_top"
+                onclick="click_terminal('4400')"
+              ></button>
+
+              <button
+                class="button_terminal_cursor_bottom"
+                onclick="click_terminal('2400')"
+              ></button>
+
+              <button
+                class="button_terminal_cursor_right"
+                onclick="click_terminal('2200')"
+              ></button>
+
+              <button
+                class="button_terminal_cursor_left"
+                onclick="click_terminal('4200')"
+              ></button>
+
+              <button
+                class="button_terminal_cursor_enter"
+                onclick="click_terminal('3300')"
+              ></button>
+
+              <button
+                class="button_terminal_recipe"
+                onclick="click_terminal('3100')"
+              ></button>
+
+              <button
+                class="button_terminal_pens"
+                onclick="click_terminal('1100')"
+              ></button>
+            </div>
+          </h2>
+        </div>
+      </div>
+
+      <div style="margin-bottom: 5%"></div>
+
+      <div class="title_podval unselectable">Korm TCP Server by M.Semerkov</div>
+
+      <!--                                 МОДАЛЬНЫЕ ОКНА                                          -->
+
+      <div class="modal" id="modal_save" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-header">Сохранить текущие данные?</div>
+
+          <div class="modal-body">Потребуется перезагрузка!</div>
+
+          <a
+            class="btn-modal-yes"
+            aria-hidden="true"
+            onclick="all_save_config()"
+            href="#modal_reboot"
+            >Да</a
+          >
+          <a href="#close" class="btn-modal-no" aria-hidden="true">Нет</a>
+        </div>
+      </div>
+
+      <div class="modal" id="modal_reboot" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-header">Перезагрузка</div>
+          <div class="modal-body">Перезагрузить контроллер сейчас?</div>
+
+          <a
+            href="#close"
+            class="btn-modal-yes"
+            onclick="reboot_esp()"
+            href="#modal_reboot"
+            aria-hidden="true"
+            >Да</a
+          >
+          <a href="#close" class="btn-modal-no" aria-hidden="true">Нет</a>
+        </div>
+      </div>
+
+      <div class="modal" id="modal_reset_config" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-header">Сброс данных</div>
+          <div class="modal-body">Применить дефолтные настройки?</div>
+
+          <a
+            class="btn-modal-yes"
+            onclick="button_default_reset()"
+            href="#modal_reboot"
+            aria-hidden="true"
+            >Да</a
+          >
+          <a href="#close" class="btn-modal-no" aria-hidden="true">Нет</a>
+        </div>
+      </div>
+    </div>
+
+    <script type="text/javascript" src="js/button_terminal.js"></script>
+  </body>
+</html>

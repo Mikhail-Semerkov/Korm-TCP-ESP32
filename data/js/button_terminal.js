@@ -1,5 +1,3 @@
-
-
 function click_terminal(value) {
 
     var request = new XMLHttpRequest();
