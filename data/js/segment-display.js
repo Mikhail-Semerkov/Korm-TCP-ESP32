@@ -1,17 +1,3 @@
-/*!
- * segment-display.js
- *
- * Copyright 2012, Rüdiger Appel
- * http://www.3quarks.com
- * Published under Creative Commons 3.0 License.
- *
- * Date: 2012-02-14
- * Version: 1.0.0
- * 
- * Dokumentation: http://www.3quarks.com/de/Segmentanzeige
- * Documentation: http://www.3quarks.com/en/SegmentDisplay
- */
-
 // Segment display types
 SegmentDisplay.SevenSegment    = 7;
 SegmentDisplay.FourteenSegment = 14;

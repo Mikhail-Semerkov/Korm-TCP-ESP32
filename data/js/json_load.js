@@ -165,6 +165,7 @@ function loadValues() {
           }
 
           setting_load = true;
+
         }
 
         if (running) setTimeout(loadValues, reloadPeriod);
@@ -178,13 +179,28 @@ function loadValues() {
 
 
 function run() {
-  if (!running) {
+  if (!running)
+  {
     running = true;
+   
+
     loadValues();
   }
 }
 
-function onBodyLoad() {
+
+function run_terminal() {
+  if (!running)
+  {
+    running = true;
+    document.getElementById('terminal_controll').style = "display: block";
+
+    loadValues();
+  }
+}
+
+function onBodyLoad()
+{
   run();
 }
 

@@ -10,8 +10,9 @@
 
     <script type="text/javascript" src="js/segment-display.js"></script>
     <script type="text/javascript" src="js/json_load.js"></script>
+    <script type="text/javascript" src="js/elements_controll.js"></script>
 
-    <title>Korm TCP Server</title>
+    <title>Dublore DIGI-STAR</title>
     <style>
       @font-face {
         font-family: "Montserrat";
@@ -20,20 +21,24 @@
     </style>
   </head>
 
-  <body onload="onBodyLoad()">
+  <body onload="run_terminal()">
     <div class="container_digistar unselectable">
-      <h2 class="title unselectable" onclick="home_click()">
-        Terminal Digi-Star
+      <h2
+        class="title unselectable"
+        style="cursor: pointer"
+        onclick="home_click()"
+      >
+        Dublore DIGI-STAR
       </h2>
 
       <div class="settings">
         <div class="imgblock2">
-          <img src="/data/image/terminal.jpg" />
+          <img src="/image/terminal.jpg" />
 
           <h2>
-            <canvas id="display_terminal" width="420" height="100"></canvas>
+            <div id="terminal_controll" style="display: none">
+              <canvas id="display_terminal" width="420" height="100"></canvas>
 
-            <div>
               <button
                 class="button_terminal_zero"
                 onclick="click_terminal('4300')"

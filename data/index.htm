@@ -21,13 +21,21 @@
 
   <body onload="onBodyLoad()">
     <div class="container unselectable">
-      <h2 class="title unselectable" onclick="home_click()">Korm TCP Server</h2>
+      <h2
+        class="title unselectable"
+        style="cursor: pointer"
+        onclick="home_click()"
+      >
+        Korm TCP Server
+      </h2>
 
       <span class="settings__title setting-title">DUBLORE DIGI-STAR</span>
       <div style="margin-bottom: 1%"></div>
 
       <div class="border_dublore">
         <canvas id="display" width="250" height="80"></canvas>
+        <a href="#modal_terminal_controll" class="button_style">Управление</a>
+        <div style="margin-bottom: 2%"></div>
       </div>
 
       <div style="margin-bottom: 5%"></div>
@@ -288,6 +296,23 @@
       <div class="title_podval unselectable">Korm TCP Server by M.Semerkov</div>
 
       <!--                                 МОДАЛЬНЫЕ ОКНА                                          -->
+
+      <div class="modal" id="modal_terminal_controll" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-header">Покинуть страницу?</div>
+
+          <div class="modal-body">
+            Будет произведён переход на страницу управления терминала!
+          </div>
+          <a
+            class="btn-modal-yes"
+            aria-hidden="true"
+            onclick="terminal_controll_page()"
+            >Да</a
+          >
+          <a href="#close" class="btn-modal-no" aria-hidden="true">Нет</a>
+        </div>
+      </div>
 
       <div class="modal" id="modal_save" aria-hidden="true">
         <div class="modal-dialog">

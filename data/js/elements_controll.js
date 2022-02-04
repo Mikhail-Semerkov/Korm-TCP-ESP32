@@ -115,5 +115,13 @@ function reboot_esp() {
 }
 
 function home_click() {
-  document.location.reload();
+  document.location.href = "http://" + window.location.hostname;
+}
+
+
+function terminal_controll_page()
+{
+
+  document.location.href = "http://" + window.location.hostname + "/terminal.htm";
+
 }
