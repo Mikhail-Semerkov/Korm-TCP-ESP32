@@ -2,6 +2,24 @@ var reloadPeriod = 1000;
 var running = false;
 var setting_load = false;
 
+
+function run_index() {
+  if (!running)
+  {
+    running = true;
+    loadValues();
+  }
+}
+
+function run_terminal() {
+  if (!running)
+  {
+    running = true;
+    document.getElementById('terminal_controll').style = "display: block";
+
+  }
+}
+
 var mode_serial,
   serial_baund,
   mode_wifi,
@@ -96,6 +114,8 @@ function loadValues() {
 
         ///////////////////////////////////////////////////////////////////
 
+
+        
         conf_mode_wifi.textContent = "MODE WIFI: " + res.mode_wifi;
         conf_ip_addr.textContent = "IP ADDR: " + res.ip_addr;
         conf_mode_serial.textContent = "MODE SERIAL: " + res.mode_serial;
@@ -177,32 +197,6 @@ function loadValues() {
   xh.send();
 }
 
-
-function run() {
-  if (!running)
-  {
-    running = true;
-   
-
-    loadValues();
-  }
-}
-
-
-function run_terminal() {
-  if (!running)
-  {
-    running = true;
-    document.getElementById('terminal_controll').style = "display: block";
-
-    loadValues();
-  }
-}
-
-function onBodyLoad()
-{
-  run();
-}
 
 
 

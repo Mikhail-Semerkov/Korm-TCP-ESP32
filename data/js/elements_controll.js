@@ -38,12 +38,6 @@ function button_default_reset() {
   request.send();
 }
 
-//Scan WiFi
-function wi_wi_scan_esp_click() {
-  console.log("Scan Wi-Fi");
-  request.open("GET", "/wi_wi_scan_esp_set", true);
-  request.send();
-}
 
 function all_save_config() {
   var GET_Server =

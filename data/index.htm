@@ -19,7 +19,7 @@
     <link rel="stylesheet" href="css/modal.css" />
   </head>
 
-  <body onload="onBodyLoad()">
+  <body onload="run_index()">
     <div class="container unselectable">
       <h2
         class="title unselectable"
@@ -62,51 +62,45 @@
         <div style="margin-bottom: 5%"></div>
         <button class="accordion">Network Settings</button>
         <div class="panel">
-          <div class="settings">
-            <span class="settings__title setting-title">Режим Wi-Fi</span>
-          </div>
+          <div class="border_dublore">
+            <div class="settings">
+              <span class="settings__title setting-title">Режим Wi-Fi</span>
+            </div>
 
-          <div class="unselectable">
-            <input
-              id="radio_sta"
-              name="radio"
-              type="radio"
-              value="WIFI_STA"
-              onchange="handleChange(this); "
-            />
+            <div class="unselectable">
+              <input
+                id="radio_sta"
+                name="radio"
+                type="radio"
+                value="WIFI_STA"
+                onchange="handleChange(this); "
+              />
 
-            <label for="radio_sta">STA </label>
+              <label for="radio_sta">STA </label>
 
-            <input
-              id="radio_ap"
-              name="radio"
-              type="radio"
-              value="WIFI_AP"
-              onchange="handleChange(this);"
-            />
-            <label for="radio_ap">AP</label>
+              <input
+                id="radio_ap"
+                name="radio"
+                type="radio"
+                value="WIFI_AP"
+                onchange="handleChange(this);"
+              />
+              <label for="radio_ap">AP</label>
 
-            <input
-              id="DHCP"
-              name="DHCP"
-              type="checkbox"
-              onchange="handleCheckBox(this);"
-            />
-            <label for="DHCP">DHCP</label>
+              <input
+                id="DHCP"
+                name="DHCP"
+                type="checkbox"
+                onchange="handleCheckBox(this);"
+              />
+              <label for="DHCP">DHCP</label>
+            </div>
           </div>
 
           <div id="settings_mode_ap"></div>
 
           <div id="settings_mode_sta">
             <div style="margin-bottom: 5%"></div>
-
-            <a
-              class="button_style"
-              onclick="wi_wi_scan_esp_click()"
-              id="wi_fi_scan"
-              href="#modal_scan_wifi"
-              >Сканировать Wi-Fi</a
-            >
 
             <div style="margin-bottom: 5%"></div>
 

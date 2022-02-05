@@ -1,47 +1,3 @@
-String translateEncryptionType(wifi_auth_mode_t encryptionType)
-{
-  switch (encryptionType)
-  {
-  case (WIFI_AUTH_OPEN):
-    return "Open";
-  case (WIFI_AUTH_WEP):
-    return "WEP";
-  case (WIFI_AUTH_WPA_PSK):
-    return "WPA_PSK";
-  case (WIFI_AUTH_WPA2_PSK):
-    return "WPA2_PSK";
-  case (WIFI_AUTH_WPA_WPA2_PSK):
-    return "WPA_WPA2_PSK";
-  case (WIFI_AUTH_WPA2_ENTERPRISE):
-    return "WPA2_ENTERPRISE";
-  }
-}
-
-void scanNetworks()
-{
-  int numberOfNetworks = WiFi.scanNetworks();
-
-  Serial.print("Number of networks found: ");
-  Serial.println(numberOfNetworks);
-
-  for (int i = 0; i < numberOfNetworks; i++)
-  {
-    Serial.print("Network name: ");
-    Serial.println(WiFi.SSID(i));
-
-    Serial.print("Signal strength: ");
-    Serial.println(WiFi.RSSI(i));
-
-    Serial.print("MAC address: ");
-    Serial.println(WiFi.BSSIDstr(i));
-
-    Serial.print("Encryption type: ");
-    String encryptionTypeDescription = translateEncryptionType(WiFi.encryptionType(i));
-    Serial.println(encryptionTypeDescription);
-    Serial.println("-----------------------");
-  }
-}
-
 String formatBytes(size_t bytes)
 {
   if (bytes < 1024)
@@ -247,13 +203,6 @@ void button_reboot_click()
   ESP.restart();
 }
 
-void wi_wi_scan_click()
-{
-  Serial.println(F("WiFi Scan ESP32..."));
-  web_server.send(200, "text/html", "");
-  scanNetworks();
-}
-
 void save_web_config()
 {
 
@@ -383,7 +332,6 @@ void setup_server_web(void)
                   json = String(); });
 
   web_server.on("/reboot_esp_set", button_reboot_click);
-  web_server.on("/wi_wi_scan_esp_set", wi_wi_scan_click);
   web_server.on("/save_web_config_set", save_web_config);
   web_server.on("/default_settings_esp_set", default_settings_esp);
 
