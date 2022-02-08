@@ -2,20 +2,30 @@ String formatBytes(size_t bytes)
 {
   if (bytes < 1024)
   {
-    return String(bytes) + "B";
+    return String(bytes) + " B";
   }
   else if (bytes < (1024 * 1024))
   {
-    return String(bytes / 1024.0) + "KB";
+    return String(bytes / 1024.0) + " KB";
   }
   else if (bytes < (1024 * 1024 * 1024))
   {
-    return String(bytes / 1024.0 / 1024.0) + "MB";
+    return String(bytes / 1024.0 / 1024.0) + " MB";
   }
   else
   {
-    return String(bytes / 1024.0 / 1024.0 / 1024.0) + "GB";
+    return String(bytes / 1024.0 / 1024.0 / 1024.0) + " GB";
   }
+}
+
+String ip2Str(IPAddress ip)
+{
+  String s;
+  for (int i = 0; i < 4; i++)
+  {
+    s += i ? "." + String(ip[i]) : String(ip[i]);
+  }
+  return s;
 }
 
 String getContentType(String filename)
@@ -185,16 +195,6 @@ void handleFileList()
   dir.close();
 }
 
-String ip2Str(IPAddress ip)
-{
-  String s = "";
-  for (int i = 0; i < 4; i++)
-  {
-    s += i ? "." + String(ip[i]) : String(ip[i]);
-  }
-  return s;
-}
-
 void button_reboot_click()
 {
   Serial.println(F("Rebooting ESP32..."));
@@ -245,7 +245,7 @@ void button_click_web_config()
   String Buffer = web_server.arg("name_click");
   web_server.send(200, "text/plane", "OK");
   Serial.println(Buffer);
-  write_command_digistar(Buffer);
+  write_command_digistar(SUB + Buffer);
 }
 
 void default_settings_esp()
@@ -254,6 +254,78 @@ void default_settings_esp()
   Serial.println("Read default config");
   SPIFFS.remove("/config.json");
   ESP.restart();
+}
+
+void set_time_terminal()
+{
+
+  String Buffer = web_server.arg("time");
+  web_server.send(200, "text/plane", "OK");
+  Buffer.replace(":", "");
+
+  Serial.println(Buffer);
+
+  String Time;
+
+  for (int i = 0; i < Buffer.length(); i++)
+  {
+    switch (Buffer.charAt(i))
+    {
+    case '1':
+      Time += SUB + N1;
+      break;
+    case '2':
+      Time += SUB + N2;
+      break;
+    case '3':
+      Time += SUB + N3;
+      break;
+    case '4':
+      Time += SUB + N4;
+      break;
+    case '5':
+      Time += SUB + N5;
+      break;
+    case '6':
+      Time += SUB + N6;
+      break;
+    case '7':
+      Time += SUB + N7;
+      break;
+    case '8':
+      Time += SUB + N8;
+      break;
+    case '9':
+      Time += SUB + N9;
+      break;
+    case '0':
+      Time += SUB + N0;
+      break;
+    }
+  }
+
+  write_command_digistar(SUB + N2 + SUB + N0 + SUB + N2 + SUB + SELECT);
+  delay(500);
+  write_command_digistar(Time);
+  delay(500);
+  write_command_digistar(SUB + ON);
+}
+
+void set_recipe_terminal_clear()
+{
+
+  String Buffer = web_server.arg("terminal_clear");
+  web_server.send(200, "text/plane", "OK");
+  if (Buffer == "true")
+  {
+    Serial.println("Clear Recipe");
+
+    write_command_digistar(String(ESC));
+    delay(10);
+    write_command_digistar("Re-99999");
+    delay(10);
+    write_command_digistar(String(EOT));
+  }
 }
 
 void setup_server_web(void)
@@ -301,7 +373,7 @@ void setup_server_web(void)
 
                   json += "\"mask_addr\":" + String("\"") + String(ip2Str(WiFi.subnetMask())) + String("\", \n");
                   json += "\"gataway_addr\":" + String("\"") + String(ip2Str(WiFi.gatewayIP())) + String("\", \n");
-                  json += "\"free_ram\":" + String("\"") + String(ESP.getFreeHeap()) + String("\", \n");
+                  json += "\"free_ram\":" + String("\"") + formatBytes(ESP.getFreeHeap()) + String("\", \n");
                   json += "\"wifi_ssid\":" + String("\"") + config._wifi_ssid + String("\", \n");
                   json += "\"wifi_pass\":" + String("\"") + config._wifi_pass + String("\", \n");
                   json += "\"wifi_ssid_ap\":" + String("\"") + config._wifi_ssid_ap + String("\", \n");
@@ -336,6 +408,10 @@ void setup_server_web(void)
   web_server.on("/default_settings_esp_set", default_settings_esp);
 
   web_server.on("/click_terminal", button_click_web_config);
+
+  web_server.on("/time_terminal", set_time_terminal);
+
+  web_server.on("/recipe_terminal_clear", set_recipe_terminal_clear);
 
   web_server.begin();
 

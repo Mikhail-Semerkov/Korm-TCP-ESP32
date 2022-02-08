@@ -3,8 +3,9 @@
   font-family: "Montserrat";
   font-weight: 400;
   font-style: normal;
-  src: local("Montserrat"), url(/fonts/Montserrat.woff2.gz) format("woff2"),
-    local("Montserrat"), url(/fonts/Montserrat.woff.gz) format("woff");
+  src: local("Montserrat"), url(/fonts/Montserrat.woff2) format("woff2"),
+    local("Montserrat"), url(/fonts/Montserrat.woff) format("woff"),
+    local("Montserrat"), url(/fonts/Montserrat.ttf) format("ttf");
 }
 
 .unselectable {
@@ -456,5 +457,3 @@ a.button_style:active {
   line-height: 29px;
   padding: 3px 5px;
 }
-
-

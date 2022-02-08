@@ -26,20 +26,6 @@
   border-radius: 6px;
 }
 
-.button_terminal_hold {
-  cursor: pointer;
-  color: #00e0d0;
-  background: rgba(0, 0, 0, 0);
-  border-color: white;
-  position: absolute;
-  height: 41px;
-  width: 46px;
-  left: 338px;
-  right: 10px;
-  top: -95px;
-  border-radius: 6px;
-}
-
 .button_terminal_timer {
   cursor: pointer;
   color: #00e0d0;
@@ -326,11 +312,9 @@
   background: rgba(0, 0, 0, 0);
   border-color: white;
   position: absolute;
-
   border: 18px solid transparent;
   border-bottom: 30px solid transparent;
   outline: none;
-
   height: 30px;
   width: 36px;
   left: 278px;
@@ -345,11 +329,9 @@
   background: rgba(0, 0, 0, 0);
   border-color: white;
   position: absolute;
-
   border: 18px solid transparent;
   border-top: 30px solid transparent;
   outline: none;
-
   height: 30px;
   width: 36px;
   left: 278px;
@@ -364,11 +346,9 @@
   background: rgba(0, 0, 0, 0);
   border-color: white;
   position: absolute;
-
   border: 18px solid transparent;
   border-right: 30px solid transparent;
   outline: none;
-
   height: 30px;
   width: 36px;
   left: 220px;
@@ -383,11 +363,9 @@
   background: rgba(0, 0, 0, 0);
   border-color: white;
   position: absolute;
-
   border: 18px solid transparent;
   border-left: 30px solid transparent;
   outline: none;
-
   height: 30px;
   width: 36px;
   left: 322px;

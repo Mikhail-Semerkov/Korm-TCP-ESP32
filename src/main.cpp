@@ -31,6 +31,26 @@ void check_dublore()
   if (millis() - Timer_Data_DS >= 100)
   {
     Timer_Data_DS = millis();
+
+    if (Data_DS == "777777")
+    {
+      default_flag = true;
+    }
+    else if (default_flag == true && Data_DS == "RESET+" || Data_DS == "RESET ")
+    {
+
+      timer_default++;
+
+      if (timer_default >= 20)
+      {
+
+        default_settings_esp();
+      }
+    }
+    else
+    {
+      timer_default = 0;
+    }
   }
 }
 

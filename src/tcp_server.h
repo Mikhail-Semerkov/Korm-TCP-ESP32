@@ -146,11 +146,8 @@ void setup_tcp_server()
   server.setNoDelay(true);
 }
 
-
-
 void write_command_digistar(String value)
 {
-  Serial1.write(SUB);
   Serial1.print(value);
 }
 

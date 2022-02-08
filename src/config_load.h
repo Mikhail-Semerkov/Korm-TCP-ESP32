@@ -14,9 +14,9 @@ void loadConfiguration(const char *filename, Config &config)
 
   config._mode_serial = root["mode_serial"] | "SERIAL_8E1";
   config._serial_baund = root["serial_baund"] | "9600";
-  config._mode_wifi = root["mode_wifi"] | "WIFI_STA";
-  config._wifi_ssid = root["wifi_ssid"] | "Padavan 2.4";
-  config._wifi_pass = root["wifi_pass"] | "46684668";
+  config._mode_wifi = root["mode_wifi"] | "WIFI_AP";
+  config._wifi_ssid = root["wifi_ssid"] | "";
+  config._wifi_pass = root["wifi_pass"] | "";
   config._wifi_ssid_ap = root["wifi_ssid_ap"] | "Korm TCP Server";
   config._wifi_pass_ap = root["wifi_pass_ap"] | "12345678";
   config._port_tcp = root["port_tcp"] | "4001";

@@ -7,8 +7,6 @@
 #include <SPIFFS.h>
 #include <ArduinoJson.h>
 #include <WiFi.h>
-#include <Update.h>
-
 /////////////////              Load Config                 /////////////////
 
 struct Config
@@ -30,10 +28,6 @@ File fsUploadFile;
 
 /////////////////              TCP Server                  /////////////////
 
-char ESC = '';
-char EOT = '';
-char SUB = '';
-
 #define MAX_SRV_CLIENTS 4
 
 int Client_Connected = 0;
@@ -50,3 +44,55 @@ int Port = 4001;
 IPAddress local_IP, gateway, subnet, primaryDNS, secondaryDNS;
 WiFiServer server(Port);
 WiFiClient serverClients[MAX_SRV_CLIENTS];
+
+int timer_default;
+bool default_flag;
+
+//////////////             Digi-Star Protocol                  /////////////
+
+//Значение Стандартов
+char SUB = ''; // Hex 1A
+char STX = ''; // Hex 02
+char ETX = ''; // Hex 03
+char ACK = ''; // Hex 06
+char NAK = ''; // Hex 15
+char CR = '';  // Hex 0D
+char LF = '';  // Hex 10
+char RS = '';  // Hex 1E
+char ESC = ''; // Hex 1B
+char EOT = ''; // Hex 04
+
+//////////////Основные кнопки/////////////////
+String MENU = "1700";
+String SBROS = "6600";
+String PRINT = "2300";
+String ZERO = "4300";
+String UP = "4400";
+String DOWN = "2400";
+String LEFT = "4200";
+String RIGHT = "2200";
+String ENTER = "3300";
+String CLEAR = "1700";
+String ON = "0800";
+String SELECT = "2700";
+String ID = "1200";
+String HELP = "1300";
+String FUNCTION = "3700";
+String PENS = "1100";
+String RECIPE = "3100";
+String NETGROSS = "1000";
+String TARE = "4000";
+String TIMER = "4700";
+String HOLD = "2000";
+
+//Кнопки цифр
+String N0 = "1600";
+String N1 = "3400";
+String N2 = "4500";
+String N3 = "3500";
+String N4 = "2500";
+String N5 = "1500";
+String N6 = "1400";
+String N7 = "4600";
+String N8 = "3600";
+String N9 = "2600";
