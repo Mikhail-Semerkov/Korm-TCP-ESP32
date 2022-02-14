@@ -245,7 +245,7 @@ void button_click_web_config()
   String Buffer = web_server.arg("name_click");
   web_server.send(200, "text/plane", "OK");
   Serial.println(Buffer);
-  write_command_digistar(SUB + Buffer);
+  write_command_digistar(DS.SUB + Buffer);
 }
 
 void default_settings_esp()
@@ -272,43 +272,43 @@ void set_time_terminal()
     switch (Buffer.charAt(i))
     {
     case '1':
-      Time += SUB + N1;
+      Time += DS.SUB + DS.N1;
       break;
     case '2':
-      Time += SUB + N2;
+      Time += DS.SUB + DS.N2;
       break;
     case '3':
-      Time += SUB + N3;
+      Time += DS.SUB + DS.N3;
       break;
     case '4':
-      Time += SUB + N4;
+      Time += DS.SUB + DS.N4;
       break;
     case '5':
-      Time += SUB + N5;
+      Time += DS.SUB + DS.N5;
       break;
     case '6':
-      Time += SUB + N6;
+      Time += DS.SUB + DS.N6;
       break;
     case '7':
-      Time += SUB + N7;
+      Time += DS.SUB + DS.N7;
       break;
     case '8':
-      Time += SUB + N8;
+      Time += DS.SUB + DS.N8;
       break;
     case '9':
-      Time += SUB + N9;
+      Time += DS.SUB + DS.N9;
       break;
     case '0':
-      Time += SUB + N0;
+      Time += DS.SUB + DS.N0;
       break;
     }
   }
 
-  write_command_digistar(SUB + N2 + SUB + N0 + SUB + N2 + SUB + SELECT);
+  write_command_digistar(DS.SUB + DS.N2 + DS.SUB + DS.N0 + DS.SUB + DS.N2 + DS.SUB + DS.SELECT);
   delay(500);
   write_command_digistar(Time);
   delay(500);
-  write_command_digistar(SUB + ON);
+  write_command_digistar(DS.SUB + DS.ON);
 }
 
 void set_recipe_terminal_clear()
@@ -320,11 +320,11 @@ void set_recipe_terminal_clear()
   {
     Serial.println("Clear Recipe");
 
-    write_command_digistar(String(ESC));
+    write_command_digistar(String(DS.ESC));
     delay(10);
     write_command_digistar("Re-99999");
     delay(10);
-    write_command_digistar(String(EOT));
+    write_command_digistar(String(DS.EOT));
   }
 }
 
